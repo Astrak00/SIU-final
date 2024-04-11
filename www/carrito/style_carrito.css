@@ -1,0 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+#addProductForm {
+  margin-bottom: 20px;
+}
+
+#addProductForm label {
+  margin-right: 10px;
+}
+
+#addProductForm input {
+  margin-right: 20px;
+}
+
+#cart {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#cartItems {
+  list-style-type: none;
+  padding: 0;
+}
+
+#cartItems li {
+  margin-bottom: 5px;
+}
+
+#totalPrice {
+  font-weight: bold;
+}
