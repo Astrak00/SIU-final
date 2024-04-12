@@ -66,3 +66,13 @@ header {
 .selected {
   background-color: #af2121;
 }
+
+#cartIcon {
+  margin: 20px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 50px; /* Tamaño de la imagen */
+  height: auto;
+  cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
+}
