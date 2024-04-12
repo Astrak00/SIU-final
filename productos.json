@@ -1,0 +1,87 @@
+[
+    {
+      "nombre": "Camiseta de algodón",
+      "precio": 15.99,
+      "cantidad": 50,
+      "descripcion": "Camiseta básica de algodón para uso diario.",
+      "imagen": "https://example.com/camiseta.jpg"
+    },
+    {
+      "nombre": "Anillo de plata",
+      "precio": 29.99,
+      "cantidad": 20,
+      "descripcion": "Anillo de plata esterlina con diseño minimalista.",
+      "imagen": "https://example.com/anillo.jpg"
+    },
+    {
+      "nombre": "Teléfono inteligente",
+      "precio": 399.99,
+      "cantidad": 10,
+      "descripcion": "Teléfono inteligente con pantalla de alta resolución y cámara de alta calidad.",
+      "imagen": "https://example.com/telefono.jpg"
+    },
+    {
+      "nombre": "Portátil",
+      "precio": 899.99,
+      "cantidad": 5,
+      "descripcion": "Portátil ligero y potente para trabajar en cualquier lugar.",
+      "imagen": "https://example.com/portatil.jpg"
+    },
+    {
+        "nombre": "Zapatos deportivos",
+        "precio": 59.99,
+        "cantidad": 30,
+        "descripcion": "Zapatos deportivos con suela de goma antideslizante y diseño moderno.",
+        "imagen": "https://example.com/zapatos.jpg"
+      },
+      {
+        "nombre": "Collar de perlas",
+        "precio": 49.99,
+        "cantidad": 15,
+        "descripcion": "Collar elegante de perlas cultivadas con cierre de plata.",
+        "imagen": "https://example.com/collar.jpg"
+      },
+      {
+        "nombre": "Tableta",
+        "precio": 299.99,
+        "cantidad": 8,
+        "descripcion": "Tableta con pantalla de alta definición y batería de larga duración.",
+        "imagen": "https://example.com/tableta.jpg"
+      },
+      {
+        "nombre": "Cámara DSLR",
+        "precio": 799.99,
+        "cantidad": 12,
+        "descripcion": "Cámara réflex digital con sensor de alta resolución y múltiples modos de disparo.",
+        "imagen": "https://example.com/camara.jpg"
+      },
+      {
+        "nombre": "Pantalones vaqueros",
+        "precio": 39.99,
+        "cantidad": 25,
+        "descripcion": "Pantalones vaqueros de corte clásico y tela resistente.",
+        "imagen": "https://example.com/pantalones.jpg"
+      },
+      {
+        "nombre": "Reloj de pulsera",
+        "precio": 79.99,
+        "cantidad": 18,
+        "descripcion": "Reloj de pulsera analógico con correa de cuero y movimiento suizo.",
+        "imagen": "https://example.com/reloj.jpg"
+      },
+      {
+        "nombre": "Altavoz Bluetooth",
+        "precio": 49.99,
+        "cantidad": 20,
+        "descripcion": "Altavoz portátil con conectividad Bluetooth y sonido de alta calidad.",
+        "imagen": "https://example.com/altavoz.jpg"
+      },
+      {
+        "nombre": "Smartwatch",
+        "precio": 129.99,
+        "cantidad": 15,
+        "descripcion": "Smartwatch con pantalla táctil a color y seguimiento de actividad física.",
+        "imagen": "https://example.com/smartwatch.jpg"
+      }
+  ]
+  
