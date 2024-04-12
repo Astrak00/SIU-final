@@ -9,6 +9,27 @@ header {
   padding: 20px;
   text-align: center;
 }
+
+.container-filtro{
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.filtro{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.filtro #titulo-filtro{
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.filtro div{
+  width: 40%;
+}
+
 .container {
   margin: 20px auto;
   width: 80%;

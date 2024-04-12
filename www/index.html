@@ -10,9 +10,34 @@
     <header>
       <h1>Tienda Online</h1>
     </header>
+    <div class="container-filtro">
+      <div class="filtro">
+        <div id="titulo-filtro">
+          <h2>Filtros</h2>
+        </div>
+        <div id="div-filtro-precio">
+          <label for="filtro-precio">Precio:</label>
+          <select name="filtro" id="filtro-precio">
+            <option value="0">Todos</option>
+            <option value="10">Menor a $10</option>
+            <option value="15">Menor a $15</option>
+            <option value="20">Menor a $20</option>
+            <option value="25">Menor a $25</option>
+          </select>
+        </div>
+        <div id="div-filtro-categoria">
+          <label for="filtro-categoria">Categoría:</label>
+          <select name="filtro" id="filtro-categoria">
+            <option value="0">Todos</option>
+            <option value="1">kk</option>
+            <option value="2">pp</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="products">
-        <div class="product" id="product1">
+        <div class="product" id="product1" data-categoria="electronica">
           <img
             src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ebay.es%2Fitm%2F404212691917&psig=AOvVaw2hBk4rj8G8kHglRSWSMOfQ&ust=1712391880176000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLDKhMPTqoUDFQAAAAAdAAAAABAE"
             alt="Product 1"
@@ -23,7 +48,7 @@
             Añadir al carrito
           </button>
         </div>
-        <div class="product selected" id="product2">
+        <div class="product selected" id="product2" data-categoria="alimentacion">
           <img src="product2.jpg" alt="Product 2" />
           <h2>Producto 2</h2>
           <p>Precio: $15</p>
@@ -31,7 +56,7 @@
             Añadir al carrito
           </button>
         </div>
-        <div class="product" id="product3">
+        <div class="product" id="product3" data-categoria="electronica">
           <img src="product3.jpg" alt="Product 3" />
           <h2>Producto 3</h2>
           <p>Precio: $15</p>
@@ -39,7 +64,7 @@
             Añadir al carrito
           </button>
         </div>
-        <div class="product" id="product4">
+        <div class="product" id="product4" data-categoria="electronica">
           <img src="product4.jpg" alt="Product 4" />
           <h2>Producto 4</h2>
           <p>Precio: $25</p>
