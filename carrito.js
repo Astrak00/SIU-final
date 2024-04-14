@@ -50,8 +50,8 @@ function renderlist (list){
 
 }
 
-function load_product{ 
-  fetch('http://localhost:3333/compra')
+function load_products(){ 
+  fetch('http://localhost:3333/tienda')
         .then(response => response.json())
         .then(data => {
             renderlist(data);
