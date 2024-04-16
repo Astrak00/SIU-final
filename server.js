@@ -95,3 +95,31 @@ load_all_products();
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
+
+
+// const app = express();
+app.use(bodyParser.json());
+
+// registors de los usuarios
+const users = [
+  { username: 'user1', password: 'password1', id: 1 },
+  { username: 'user2', password: 'password2', id: 2 }
+];
+
+// Login endpoint
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Autenticación
+  const user = users.find(user => user.username === username && user.password === password);
+  if (user) {
+    res.sendStatus(200);
+  } else {
+    // Fallido
+    res.sendStatus(401); 
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});

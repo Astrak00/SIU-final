@@ -71,7 +71,7 @@ function renderlist (data){
 
 }
 
-function load_products(){ 
+ function load_products(){ 
   console.log("here");
   fetch('http://localhost:3000/tienda')
         .then(response => response.json())
@@ -82,14 +82,14 @@ function load_products(){
 }
 
 
-const textInput = document.getElementById('textInput');
-const speakButton = document.getElementById('speakButton');
+// const textInput = document.getElementById('textInput');
+// const speakButton = document.getElementById('speakButton');
 
-speakButton.addEventListener('click', () => {
-  const textToSpeak = textInput.value;
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
-  speechSynthesis.speak(utterance);
-});
+// speakButton.addEventListener('click', () => {
+//   const textToSpeak = textInput.value;
+//   const utterance = new SpeechSynthesisUtterance(textToSpeak);
+//   speechSynthesis.speak(utterance);
+// });
 
 
 function send_to_cart(){
@@ -139,3 +139,45 @@ function filterProducts() {
 
 document.getElementById('filtro-categoria').addEventListener('change', filterProducts);
 
+
+
+document.getElementById('loginIcon').addEventListener('click', function() {
+  const loginFormContainer = document.getElementById('loginFormContainer');
+  if (loginFormContainer.style.display === 'none') {
+    loginFormContainer.style.display = 'block';
+  } else {
+    loginFormContainer.style.display = 'none';
+  }
+});
+
+
+
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+  
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Send login request to server
+  fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  })
+  .then(response => {
+    if (response.ok) {
+      // Login successful, redirect or perform other actions
+      console.log('Login successful');
+      // Optionally redirect to another page
+      window.location.href = '/dashboard';
+    } else {
+      // Login failed, display error message
+      console.error('Login failed');
+    }
+  })
+  .catch(error => {
+    console.error('Error during login:', error);
+  });
+});
