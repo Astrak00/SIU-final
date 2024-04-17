@@ -7,6 +7,25 @@
     {
       "name": "Anillo de plata",
       "price": 29.99
+    },
+    {
+      "name": "Teléfono inteligente",
+      "price": 399.99
+    },
+    {
+      "name": "Portátil",
+      "price": 899.99
+    },
+    {
+      "name": "Zapatos deportivos",
+      "price": 59.99
+    },
+    {
+      "name": "Tableta",
+      "price": 299.99
+    },
+    {
+      "isTrusted": true
     }
   ]
 }

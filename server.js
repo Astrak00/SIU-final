@@ -130,7 +130,7 @@ io.on('connection', (socket) => {
     socket.on('login', function(credentials) {
         const { username, password } = credentials;
         // Aquí verificarías las credenciales de inicio de sesión
-    
+        console.log("Buscamos el usuario");
         const user = users.find(user => user.username === username && user.password === password);
         if (user) {
             // Inicio de sesión exitoso

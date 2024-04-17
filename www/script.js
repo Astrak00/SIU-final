@@ -17,7 +17,7 @@ socket.on('loginResult', function(result) {
 
 socket.on('addProductResult', function(result) {
   if (result.success) {
-    showModal('Inicio de sesión exitoso', 0);
+    showModal(result.message, 0);
   } else {
     // Inicio de sesión fallido, mostrar mensaje de error
     showModal(result.message, 1);
@@ -26,7 +26,7 @@ socket.on('addProductResult', function(result) {
 
 
 // Función para agregar un producto
-function addProduct(newProduct) {
+function addProduct(event, newProduct) {
   event.preventDefault();
   socket.emit('addProduct', newProduct);
 }
@@ -83,7 +83,11 @@ function renderlist (data){
         price_product.textContent= `${product.precio}`;
 
         const button_product = document.createElement('button');
-        button_product.onclick = () => addProduct({name: product.nombre, price: product.precio});
+        button_product.onclick = (event) => {
+          console.log('Botón clickeado');
+          addProduct(event, { name: product.nombre, price: product.precio });
+        };
+        
         button_product.classList.add('but');
         button_product.textContent = "Añadir al carrito";
  
