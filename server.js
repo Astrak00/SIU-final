@@ -5,16 +5,25 @@ npm install express body-parser
 */
 const cors = require('cors');
 const express = require('express');
+const http = require('http');
 const fs = require('fs');
-const app = express();
-app.use(cors());
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "http://127.0.0.1:5500",
+        methods: ["GET", "POST"]
+    }
+});
+
+
+app.use(cors());
+app.use(express.json());
 
 const productsFilePath = './products.json';
+let products = [];
 
-products = [];
 // Cargar todos los productos disponibles
 function load_all_products() {
     try {
@@ -45,81 +54,60 @@ function save_favourite() {
 }
 
 
-// Set the context root
-app.set('baseUrl', '/http://localhost:3000/tienda');
-
-// Get all products
-app.get('/tienda', (req, res) => {
-    res.send(products);
-});
-// Get counter
-app.get('/tienda/:counter', (req, res) => {
-    try{
-        let id =  products[products.length-1].id;
-        res.send(String(id));
-    }
-    catch{
-        let id = 0;
-        res.send(String(id));
-    }
-    
-});
-
-// Add a new product
-app.post('/tienda', (req, res) => {
-    const newProduct = req.body;
-    products.push(newProduct);
-    save_favourite();
-    res.status(201).send(newProduct);
-});
-
-
-// Delete a contact
-app.delete('/tienda/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const productIndex = products.findIndex((product) => product.id === id);
-    if (productIndex < 0) return res.status(404).send({ message: 'Product not found' });
-    products.splice(productIndex, 1);
-    save_favourite();
-    res.sendStatus(204);
-});
-
-// Redirect all other requests to the context root
-app.all('*', (req, res) => {
-    res.redirect('/www');
-});
-
 load_all_products();
 
-// Start the server
-app.listen(3000, () => {
-    console.log('Server listening on port 3000');
-});
 
 
-// const app = express();
-app.use(bodyParser.json());
-
-// registors de los usuarios
+// Registros de usuarios
 const users = [
-  { username: 'user1', password: 'password1', id: 1 },
-  { username: 'user2', password: 'password2', id: 2 }
+    { username: 'user1', password: 'password1', id: 1 },
+    { username: 'user2', password: 'password2', id: 2 }
 ];
 
-// Login endpoint
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+// Función para autenticar usuarios
+function authenticateUser(username, password) {
+    return users.find(user => user.username === username && user.password === password);
+}
 
-  // Autenticación
-  const user = users.find(user => user.username === username && user.password === password);
-  if (user) {
-    res.sendStatus(200);
-  } else {
-    // Fallido
-    res.sendStatus(401); 
-  }
+io.on('connection', (socket) => {
+    console.log('Nuevo cliente conectado');
+
+    // Enviar la lista de productos al cliente cuando se conecta
+    socket.emit('products', products);
+
+    // Agregar un nuevo producto
+    socket.on('addProduct', (newProduct) => {
+        products.push(newProduct);
+        save_favourite();
+        io.emit('productAdded', newProduct);
+    });
+
+    // Eliminar un producto
+    socket.on('deleteProduct', (productId) => {
+        const index = products.findIndex(product => product.id === productId);
+        if (index !== -1) {
+            products.splice(index, 1);
+            save_favourite();
+            io.emit('productDeleted', productId);
+        }
+    });
+    // Manejar el evento de inicio de sesión
+    socket.on('login', ({ username, password }) => {
+        const user = authenticateUser(username, password);
+        if (user) {
+            // Envía un evento de éxito de inicio de sesión al cliente
+            socket.emit('loginSuccess', user);
+        } else {
+            // Envía un evento de fallo de inicio de sesión al cliente
+            socket.emit('loginFailure');
+        }
+    });
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+
+
