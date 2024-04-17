@@ -15,10 +15,20 @@ socket.on('loginResult', function(result) {
   }
 });
 
+socket.on('addProductResult', function(result) {
+  if (result.success) {
+    showModal('Inicio de sesión exitoso', 0);
+  } else {
+    // Inicio de sesión fallido, mostrar mensaje de error
+    showModal(result.message, 1);
+  }
+});
+
 
 // Función para agregar un producto
 function addProduct(newProduct) {
-    socket.emit('addProduct', newProduct);
+  event.preventDefault();
+  socket.emit('addProduct', newProduct);
 }
 
 // Función para eliminar un producto
@@ -73,7 +83,7 @@ function renderlist (data){
         price_product.textContent= `${product.precio}`;
 
         const button_product = document.createElement('button');
-        button_product.onclick=`addToCart(${product.nombre}, ${product.precio})`;
+        button_product.onclick = () => addProduct({name: product.nombre, price: product.precio});
         button_product.classList.add('but');
         button_product.textContent = "Añadir al carrito";
  
@@ -110,9 +120,6 @@ speakButton.addEventListener('click', () => {
 });
 
 
-function send_to_cart(){
-  
-}
 
 function actulizarFiltroCategorias() {
   var categoriaSelect = document.getElementById('filtro-categoria');
@@ -171,9 +178,8 @@ document.getElementById('loginIcon').addEventListener('click', function() {
 // Manejar el envío del formulario de inicio de sesión
 function Submitform(){
   event.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
+  const username = document.getElementById('username').value.toString();
+  const password = document.getElementById('password').value.toString();
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit('login', { username, password });
 };

@@ -24,6 +24,9 @@ app.use(express.json());
 const productsFilePath = './products.json';
 let products = [];
 
+let current_user = null;
+let favourite_products = {};
+
 // Cargar todos los productos disponibles
 function load_all_products() {
     try {
@@ -37,21 +40,30 @@ function load_all_products() {
 // Meter en el carro de alguien
 function load_favourites() {
     try {
-        const data = fs.readFileSync(productsFilePath, 'utf8');
-        products = JSON.parse(data);
+        const data = fs.readFileSync("./favourite_products.json", 'utf8');
+        favourite_products = JSON.parse(data);
+        return 0;
     } catch (err) {
-        console.error('Error al cargar la lista de contactos:', err);
+        socket.emit('addProductResult', { success: false, message: 'Error al cargar la lista' });
+        console.error('Error al guardar la lista de contactos:', err);
+        return -1;
     }
 }
 
 // Guardar la lista de contactos en agenda.json
-function save_favourite() {
-    try {
-        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
-    } catch (err) {
-        console.error('Error al guardar la lista de contactos:', err);
-    }
+function save_favourite(socket) {
+    fs.writeFile('./favourite_products.json', JSON.stringify(favourite_products, null, 2), (err) => {
+        if (err) {
+            socket.emit('addProductResult', { success: false, message: 'Error al guardar la lista' });
+            console.error('Error al guardar la lista de productos:', err);
+            return 0;
+        }
+        else{
+            return 0;
+        }
+    });
 }
+
 
 
 load_all_products();
@@ -60,7 +72,7 @@ load_all_products();
 
 // Registros de usuarios
 const users = [
-    { username: 'user1', password: 'password1', id: 1 },
+    { username: '1', password: '1', id: 1 },
     { username: 'user2', password: 'password2', id: 2 }
 ];
 
@@ -77,9 +89,32 @@ io.on('connection', (socket) => {
 
     // Agregar un nuevo producto
     socket.on('addProduct', (newProduct) => {
-        products.push(newProduct);
-        save_favourite();
-        io.emit('productAdded', newProduct);
+        console.log("Recibida");
+        if (current_user == null){
+            console.log(favourite_products);
+            socket.emit("addProductResult", {success: false, message: "El usuario no iniciado sesión"})
+        }
+        else{
+            if (load_favourites() != 0){
+                return;
+            }
+            console.log(favourite_products);            
+            // Agregar artículos al usuario1
+            if (favourite_products[current_user] == null){
+                favourite_products[current_user] = [];
+            }
+            if (favourite_products[current_user].find(product => product.name === newProduct.name)){
+                socket.emit('addProductResult', { success: true, message: 'Producto ya está en la lista' });
+                return;
+            }
+            favourite_products[current_user].push(newProduct);
+            // Guardar los cambios de vuelta al archivo JSON
+            if (save_favourite() != 0){
+                return;
+            }
+            
+            socket.emit('addProductResult', { success: true, message: 'Producto guradado correctamente' });
+        }
     });
 
     // Eliminar un producto
@@ -93,20 +128,21 @@ io.on('connection', (socket) => {
     });
     // Manejar el evento de inicio de sesión
     socket.on('login', function(credentials) {
-        // Aquí verificarías las credenciales de inicio de sesión
         const { username, password } = credentials;
-        console.log("recibida petición: ", username, password);
+        // Aquí verificarías las credenciales de inicio de sesión
+    
         const user = users.find(user => user.username === username && user.password === password);
         if (user) {
-        console.log("Usuario existe");
-          // Inicio de sesión exitoso
-          socket.emit('loginResult', { success: true });
+            // Inicio de sesión exitoso
+            current_user = username;
+            socket.emit('loginResult', { success: true });
         } else {
             console.log("Usuario NO existe");
-          // Inicio de sesión fallido
-          socket.emit('loginResult', { success: false, message: 'Credenciales inválidas' });
+            // Inicio de sesión fallido
+            socket.emit('loginResult', { success: false, message: 'Credenciales inválidas' });
         }
-      });
+        
+    });
 });
 
 const PORT = 3000;
