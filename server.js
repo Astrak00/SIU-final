@@ -92,16 +92,21 @@ io.on('connection', (socket) => {
         }
     });
     // Manejar el evento de inicio de sesión
-    socket.on('login', ({ username, password }) => {
-        const user = authenticateUser(username, password);
+    socket.on('login', function(credentials) {
+        // Aquí verificarías las credenciales de inicio de sesión
+        const { username, password } = credentials;
+        console.log("recibida petición: ", username, password);
+        const user = users.find(user => user.username === username && user.password === password);
         if (user) {
-            // Envía un evento de éxito de inicio de sesión al cliente
-            socket.emit('loginSuccess', user);
+        console.log("Usuario existe");
+          // Inicio de sesión exitoso
+          socket.emit('loginResult', { success: true });
         } else {
-            // Envía un evento de fallo de inicio de sesión al cliente
-            socket.emit('loginFailure');
+            console.log("Usuario NO existe");
+          // Inicio de sesión fallido
+          socket.emit('loginResult', { success: false, message: 'Credenciales inválidas' });
         }
-    });
+      });
 });
 
 const PORT = 3000;

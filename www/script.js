@@ -6,6 +6,16 @@ socket.on('products', (data) => {
     renderlist(data);
 });
 
+socket.on('loginResult', function(result) {
+  if (result.success) {
+    showModal('Inicio de sesión exitoso', 0);
+  } else {
+    // Inicio de sesión fallido, mostrar mensaje de error
+    showModal(result.message, 1);
+  }
+});
+
+
 // Función para agregar un producto
 function addProduct(newProduct) {
     socket.emit('addProduct', newProduct);
@@ -15,7 +25,6 @@ function addProduct(newProduct) {
 function deleteProduct(productId) {
     socket.emit('deleteProduct', productId);
 }
-
 
 
 function showModal(message, err) {
@@ -147,4 +156,26 @@ function filterProducts() {
 
 
 document.getElementById('filtro-categoria').addEventListener('change', filterProducts);
+
+
+document.getElementById('loginIcon').addEventListener('click', function() {
+  console.log("HERE");
+  const loginFormContainer = document.getElementById('loginFormContainer');
+  if (loginFormContainer.style.display == 'none') {
+    loginFormContainer.style.display = 'block';
+  } else {
+    loginFormContainer.style.display = 'none';
+  }
+});
+
+// Manejar el envío del formulario de inicio de sesión
+function Submitform(){
+  event.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Enviar los datos de inicio de sesión al servidor a través de sockets
+  socket.emit('login', { username, password });
+};
+
 
