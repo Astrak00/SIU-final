@@ -11,58 +11,68 @@
     <header>
       <h1>Tienda Online</h1>
     </header>
-    <div class="container-filtro">
-      <div class="filtro">
-        <div id="titulo-filtro">
-          <h2>Filtros</h2>
-        </div>
-        <div id="div-filtro-precio">
-          <label for="filtro-precio">Precio:</label>
-          <select name="filtro" id="filtro-precio">
-            <option value="0">Todos</option>
-            <option value="10">Menor a $10</option>
-            <option value="15">Menor a $15</option>
-            <option value="20">Menor a $20</option>
-            <option value="25">Menor a $25</option>
-          </select>
-        </div>
-        <div id="div-filtro-categoria">
-          <label for="filtro-categoria">Categoría:</label>
-          <select name="filtro" id="filtro-categoria">
-            <option value="0">Todos</option>
-            <option value="1">kk</option>
-            <option value="2">pp</option>
-          </select>
+    <section id="main_page">
+      <div class="container-filtro">
+        <div class="filtro">
+          <div id="titulo-filtro">
+            <h2>Filtros</h2>
+          </div>
+          <div id="div-filtro-precio">
+            <label for="filtro-precio">Precio:</label>
+            <select name="filtro" id="filtro-precio">
+              <option value="0">Todos</option>
+              <option value="10">Menor a $10</option>
+              <option value="15">Menor a $15</option>
+              <option value="20">Menor a $20</option>
+              <option value="25">Menor a $25</option>
+            </select>
+          </div>
+          <div id="div-filtro-categoria">
+            <label for="filtro-categoria">Categoría:</label>
+            <select name="filtro" id="filtro-categoria">
+              <option value="0">Todos</option>
+              <option value="1">kk</option>
+              <option value="2">pp</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div id="products">
-      <div class="product" id="product1" data-categoria="electronica">
-        <img
-          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ebay.es%2Fitm%2F404212691917&psig=AOvVaw2hBk4rj8G8kHglRSWSMOfQ&ust=1712391880176000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLDKhMPTqoUDFQAAAAAdAAAAABAE"
-          alt="Product 1"
-        />
-        <h2>Producto 1</h2>
-        <p>Precio: $10</p>
-        <button onclick="addProduct({name: 'Product 1', price: 10})">
-          Añadir al carrito
-        </button>
-      </div>
-      <div class="product" id="product2" data-categoria="alimentacion">
-        <img src="https://example.com/anillo.jpg" alt="Product 2" />
-        <h2>Producto 2</h2>
-        <p>Precio: $15</p>
-        <button>
-          Añadir al carrito
-        </button>
-      </div>
-      
     
-    </div>
-    <a href="carrito/carrito.html" id="cartLink">
+      <div id="products">
+        <div class="product" id="product1" data-categoria="electronica">
+          <img
+            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ebay.es%2Fitm%2F404212691917&psig=AOvVaw2hBk4rj8G8kHglRSWSMOfQ&ust=1712391880176000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLDKhMPTqoUDFQAAAAAdAAAAABAE"
+            alt="Product 1"
+          />
+          <h2>Producto 1</h2>
+          <p>Precio: $10</p>
+          <button onclick="addProduct({name: 'Product 1', price: 10})">
+            Añadir al carrito
+          </button>
+        </div>
+        <div class="product" id="product2" data-categoria="alimentacion">
+          <img src="https://example.com/anillo.jpg" alt="Product 2" />
+          <h2>Producto 2</h2>
+          <p>Precio: $15</p>
+          <button>
+            Añadir al carrito
+          </button>
+        </div>
+        
+      
+      </div>
+    </section>
+    <a id="cartLink" onclick="showCart()">
       <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon">
     </a>
+    <section id="carro">
+      <h1>Carrito de Compra</h1>   
+      <!-- Carrito de Compra -->
+      <div id="cart">
+          <ul id="cart-items"></ul>
+          <p id="cart-total">Total: $<span id="totalAmount">0.00</span></p>
+      </div>
+    </section>
 
     <a id="loginIcon"> 
       <img src="./images/tres_lineas.png" alt="Inicio de sesión" id="Login_Icon">

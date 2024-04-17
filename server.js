@@ -66,10 +66,6 @@ function save_favourite(socket) {
 
 
 
-load_all_products();
-
-
-
 // Registros de usuarios
 const users = [
     { username: '1', password: '1', id: 1 },
@@ -84,6 +80,8 @@ function authenticateUser(username, password) {
 io.on('connection', (socket) => {
     console.log('Nuevo cliente conectado');
 
+
+    load_all_products();
     // Enviar la lista de productos al cliente cuando se conecta
     socket.emit('products', products);
 
@@ -142,6 +140,20 @@ io.on('connection', (socket) => {
             socket.emit('loginResult', { success: false, message: 'Credenciales inválidas' });
         }
         
+    });
+    socket.on('loadFavourites', function(){
+        if (current_user == null){
+            console.log(favourite_products);
+            socket.emit("loadFavouritesResult", {success: false, message: "El usuario no iniciado sesión"})
+        }
+        else{
+            if (load_favourites() != 0){
+                socket.emit("loadFavouritesResult", {success: false, message: "Error al cargar la lista"})
+                return;
+            }
+            console.log("Mandando la lista", favourite_products[current_user]);
+            socket.emit('loadFavouritesResult', favourite_products[current_user]);
+        }
     });
 });
 
