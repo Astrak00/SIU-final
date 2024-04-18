@@ -150,11 +150,11 @@ function load_carrito(data) {
   event.preventDefault();
   console.log(data);
   if (data.success == false) {
-    showModal("No hay productos en el carrito", 1);
+    showModal(data.message, 1);
     return;
   }
   if (data.length == 0) {
-    showModal("No hay productos en el carrito", 1);
+    showModal(data.message, 1);
     return;
   }
   const f_list = document.getElementById("cart-items");

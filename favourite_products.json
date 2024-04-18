@@ -1,20 +1,16 @@
 {
   "1": [
     {
-      "name": "Camiseta de algodón",
-      "price": 15.99
-    },
-    {
-      "name": "Anillo de plata",
-      "price": 29.99
-    },
-    {
       "name": "Teléfono inteligente",
       "price": 399.99
     },
     {
-      "name": "Zapatos deportivos",
-      "price": 59.99
+      "name": "Portátil",
+      "price": 899.99
+    },
+    {
+      "name": "Collar de perlas",
+      "price": 49.99
     }
   ]
 }
