@@ -111,8 +111,13 @@ function renderlist(data) {
     const name_product = document.createElement("h2");
     name_product.textContent = `${product.nombre}`;
 
+    const category_product = document.createElement("h2");
+    category_product.textContent = `${product.categoria}`;
+    productElement.setAttribute('data-categoria', product.categoria.toLowerCase());
+
     const price_product = document.createElement("p");
     price_product.textContent = `${product.precio}`;
+    productElement.setAttribute('data-precio', product.precio);
 
     const button_product = document.createElement("button");
     button_product.onclick = (event) => {
@@ -130,6 +135,7 @@ function renderlist(data) {
     // Agregar los elementos span al elemento de contacto
     productElement.appendChild(img_product);
     productElement.appendChild(name_product);
+    productElement.appendChild(category_product);
     productElement.appendChild(price_product);
     productElement.appendChild(descriptionHolder);
 
@@ -204,6 +210,7 @@ speakButton.addEventListener("click", () => {
 function actulizarFiltroCategorias() {
   var categoriaSelect = document.getElementById("filtro-categoria");
   var unicasCategorias = {};
+
   var productos = document.querySelectorAll(".product");
   productos.forEach(function (product) {
     var categoria = product.dataset.categoria;
@@ -216,6 +223,7 @@ function actulizarFiltroCategorias() {
   defaultOption.value = "0";
   defaultOption.textContent = "Todos";
   categoriaSelect.appendChild(defaultOption);
+
   // Añadimos las otras categorias encontradas
   Object.keys(unicasCategorias).forEach(function (category) {
     var option = document.createElement("option");
@@ -225,26 +233,78 @@ function actulizarFiltroCategorias() {
   });
 }
 
-actulizarFiltroCategorias();
+setTimeout(function() {
+  actulizarFiltroCategorias();
+}, 100);
+
+
 
 function filterProducts() {
   var categoriaSelect = document.getElementById("filtro-categoria");
   var seleccionCategoria = categoriaSelect.value;
+  var precioSelect = document.getElementById("filtro-precio");
+  var seleccionPrecio = precioSelect.value;
   var products = document.querySelectorAll(".product");
   products.forEach(function (product) {
     var categoria = product.dataset.categoria;
+    var precio = parseFloat(product.dataset.precio);
     if (seleccionCategoria === "0" || seleccionCategoria === categoria) {
-      product.style.display = "block";
+      switch(seleccionPrecio){
+        case "0":
+          product.style.display = "block"
+          break;
+        case "10":
+          if (precio < 10.0){
+            product.style.display = "block";
+          } else {
+            product.style.display = "none"
+          }
+          break;
+        case "30":
+          if (precio >= 10.0 && precio <= 30.0){
+            product.style.display = "block";
+          } else {
+            product.style.display = "none"
+          }
+          break;
+        case "100":
+          if (precio >= 30.0 && precio <= 100.0){
+            product.style.display = "block";
+          } else {
+            product.style.display = "none"
+          }
+          break;
+        case "200":
+          if (precio >= 100.0 && precio <= 200.0){
+            product.style.display = "block";
+          } else {
+            product.style.display = "none"
+          }
+          break;
+        case "-1":
+          if (precio > 200.0){
+            product.style.display = "block";
+          } else {
+            product.style.display = "none"
+          }
+          break;
+      }
     } else {
       product.style.display = "none";
     }
   });
 }
 
+
 document
   .getElementById("filtro-categoria")
   .addEventListener("change", filterProducts);
 
+document
+  .getElementById("filtro-precio")
+  .addEventListener("change", filterProducts);
+
+  
 document.getElementById("loginIcon").addEventListener("click", function () {
   console.log("HERE");
   const loginFormContainer = document.getElementById("loginFormContainer");
