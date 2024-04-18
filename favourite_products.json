@@ -1,36 +1,20 @@
 {
   "1": [
     {
-      "name": "Altavoz Bluetooth",
-      "price": 49.99
+      "name": "Camiseta de algodón",
+      "price": 15.99
     },
     {
-      "name": "Reloj de pulsera",
-      "price": 79.99
+      "name": "Anillo de plata",
+      "price": 29.99
     },
     {
-      "name": "Pantalones vaqueros",
-      "price": 39.99
-    },
-    {
-      "name": "Cámara DSLR",
-      "price": 799.99
-    },
-    {
-      "name": "Tableta",
-      "price": 299.99
-    },
-    {
-      "name": "Collar de perlas",
-      "price": 49.99
+      "name": "Teléfono inteligente",
+      "price": 399.99
     },
     {
       "name": "Zapatos deportivos",
       "price": 59.99
-    },
-    {
-      "name": "Camiseta de algodón",
-      "price": 15.99
     }
   ]
 }

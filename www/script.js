@@ -2,6 +2,7 @@
 const socket = io("http://localhost:3000");
 
 socket.on("products", (data) => {
+  console.log("Productos recibidos");
   renderlist(data);
 });
 
@@ -23,6 +24,9 @@ socket.on("addProductResult", function (result) {
     showModal(result.message, 1);
     //alert(result.message);
   }
+  setTimeout(function() {
+    console.log('Después de 2 segundos');
+  }, 2000);
 });
 
 socket.on("loadFavouritesResult", (data) => {
@@ -91,6 +95,7 @@ function closeModal() {
 var product_list = [];
 
 function renderlist(data) {
+  event.preventDefault();
   const p_list = document.getElementById("products");
   p_list.textContent = "";
   //var myArray = JSON.parse(myJSON);
@@ -142,6 +147,7 @@ function renderlist(data) {
 }
 
 function load_carrito(data) {
+  event.preventDefault();
   console.log(data);
   if (data.success == false) {
     showModal("No hay productos en el carrito", 1);
