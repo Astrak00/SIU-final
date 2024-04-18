@@ -3,17 +3,47 @@ body {
   margin: 0;
   padding: 0;
 }
+
 header {
+  display: flex;
+  position: fixed;
   background-color: #333;
   color: #fff;
-  padding: 20px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
   text-align: center;
 }
+.box{
+  width: 20%;
+}
 
-.container-filtro{
+#Login_Icon {
+  width: 50px;
+  height: auto;
+  cursor: pointer;
+}
+#title{
+  
+}
+#cartIcon {
+  width: 50px;
+  height: auto;
+  cursor: pointer;
+  margin-left: auto; 
+}
+
+#voice_activator {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.container-filtro {
   text-align: center;
   margin-bottom: 40px;
 }
+
 
 .filtro{
   display: flex;
@@ -67,15 +97,6 @@ header {
   background-color: #af2121;
 }
 
-#cartIcon {
-  margin: 20px;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  width: 50px; /* Tamaño de la imagen */
-  height: auto;
-  cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
-}
 
 
 
@@ -137,15 +158,6 @@ header {
   color: #999999;
 }
 
-#Login_Icon {
-  margin: 20px;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 50px; /* Tamaño de la imagen */
-  height: auto;
-  cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
-}
 
 #loginFormContainer{
   position: fixed;
@@ -201,4 +213,30 @@ header {
 
 #totalPrice {
   font-weight: bold;
+}
+
+
+#voice {
+  display: none;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 20px; /* Cambiado de 2 a 20px */
+  top: 0;
+  border-radius: 50%; /* Cambiado de 80% a 50% para un círculo perfecto */
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  height: 50%;
+}
+
+#voiceButton {
+  cursor: pointer;
+  width: 120%; 
+  height: auto;
 }

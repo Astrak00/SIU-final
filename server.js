@@ -187,7 +187,7 @@ io.on("connection", (socket) => {
         socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
         return; // Agregar un return para salir de la función si hay un error al guardar
       };
-      socket.emit("productDeleted", { success: true });
+      socket.emit("productDeleted", { success: true, message: favourite_products[current_user] });
     }
     else{
       socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
@@ -218,7 +218,8 @@ io.on("connection", (socket) => {
 
   // Manejar el evento de carga de favoritos
   socket.on("loadFavourites", async function () {
-    if (active_users.find((user) => user.id === socket.id).username == null) {
+    current_user = active_users.find((user) => user.id === socket.id).username;
+    if (current_user == null) {
       console.log("El usuario no está iniciado sesión", favourite_products);
       socket.emit("loadFavouritesResult", {
         success: false,
@@ -235,15 +236,18 @@ io.on("connection", (socket) => {
       console.log(
         "Mandando la lista",
         favourite_products[
-          active_users.find((user) => user.id === socket.id).username
+          current_user
         ]
       );
 
       socket.emit(
-        "loadFavouritesResult",
-        favourite_products[
-          active_users.find((user) => user.id === socket.id).username
-        ]
+        "loadFavouritesResult", {
+          success: true,
+          message: favourite_products[
+            current_user
+          ],
+        }
+        
       );
     }
   });

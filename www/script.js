@@ -34,12 +34,7 @@ socket.on("loadFavouritesResult", (data) => {
 });
 
 socket.on("productDeleted", (response) => {
-  if (response.success){
-    socket.emit("loadFavourites");
-  }
-  else{
-    showModal(response.message, 1);
-  }
+  load_carrito(response);
 });
 
 // Función para agregar un producto
@@ -159,10 +154,11 @@ function load_carrito(data) {
     showModal(data.message, 1);
     return;
   }
-  if (data.length == 0) {
-    showModal(data.message, 1);
+  if (data.message.length == 0) {
+    showModal("No hay productos en el carrito", 1);
     return;
   }
+  data = data.message;
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
   f_list.textContent = "";
@@ -331,3 +327,74 @@ function Submitform() {
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("login", { username, password });
 }
+
+
+
+
+
+
+
+
+
+
+///////////// RECONOCIMIENTO POR VOZ ///////////////////
+const voiceActivator = document.getElementById('voice_activator');
+const voiceButton = document.getElementById('voiceButton');
+const voiceContainer = document.getElementById('voice'); // Contenedor del reconocimiento por voz
+
+
+// Función para mostrar el contenedor del reconocimiento por voz
+function showMic() {
+  voiceContainer.style.display = "flex";
+}
+
+// Verificar si el navegador admite la Web Speech API
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+  // Establecer el idioma del reconocimiento de voz
+  recognition.lang = 'es-ES';
+
+  // Configurar el evento de resultado del reconocimiento de voz
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript.trim().toLowerCase();
+    console.log('Texto reconocido:', transcript);
+
+    // Aquí puedes procesar el texto reconocido para activar acciones
+    // Por ejemplo, buscar productos por su nombre o ejecutar comandos
+    if (transcript === 'seleccionar producto') {
+      // Código para seleccionar un producto
+      console.log('Producto seleccionado');
+    } else if (transcript === 'agregar al carrito') {
+      // Código para agregar un producto al carrito
+      console.log('Producto agregado al carrito');
+    }
+  };
+
+  // Configurar el evento de error del reconocimiento de voz
+  recognition.onerror = (event) => {
+    console.error('Error en el reconocimiento de voz:', event.error);
+  };
+
+  // Configurar el evento click del botón de voz
+  voiceButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Detener la propagación del clic para evitar que se cierre al hacer clic en el botón
+    // Iniciar el reconocimiento de voz cuando se hace clic en el botón
+    recognition.start();
+    console.log('Reconocimiento de voz iniciado');
+  });
+
+  // Event listener para cerrar la opción de reconocimiento por voz al hacer clic fuera del círculo o en el botón de voz
+  document.addEventListener('click', (event) => {
+    if (event.target !== voiceActivator) {
+      voiceContainer.style.display = "none"; // Ocultar el contenedor del reconocimiento por voz
+      recognition.abort(); // Detener el reconocimiento de voz
+      console.log('Reconocimiento de voz detenido');
+    }
+  });
+} else {
+  // El navegador no admite la Web Speech API
+  console.error('El navegador no admite la Web Speech API');
+  voiceButton.disabled = true;
+}
+

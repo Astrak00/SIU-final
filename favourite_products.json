@@ -1,16 +1,12 @@
 {
   "1": [
     {
-      "name": "Teléfono inteligente",
-      "price": 399.99
-    },
-    {
       "name": "Portátil",
       "price": 899.99
     },
     {
-      "name": "Collar de perlas",
-      "price": 49.99
+      "name": "Camiseta de algodón",
+      "price": 15.99
     }
   ]
 }

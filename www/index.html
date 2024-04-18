@@ -9,7 +9,20 @@
   </head>
   <body>
     <header>
-      <h1>Tienda Online</h1>
+      <a id="loginIcon" class="box">
+        <img
+          src="./images/tres_lineas.png"
+          alt="Inicio de sesión"
+          id="Login_Icon"
+        />
+      </a>
+      <h1 id = "title"  class="box">Tienda Online</h1>
+      <a onclick="showMic()"  class="box">
+        <img id="voice_activator", src="./images/microfono.png" alt="Microfono"/>
+      </a>
+      <a id="cartLink"  class="box" onclick="showCart()">
+        <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+      </a>
     </header>
     <section id="main_page">
       <div class="container-filtro">
@@ -38,14 +51,14 @@
           </div>
         </div>
       </div>
-
+      <a id = "voice">
+        <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
+      </a>
       <div id="products">
         <!-- Productos -->
       </div>
     </section>
-    <a id="cartLink" onclick="showCart()">
-      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
-    </a>
+    
     <section id="carro">
       <h1>Carrito de Compra</h1>
       <!-- Carrito de Compra -->
@@ -55,13 +68,8 @@
       </div>
     </section>
 
-    <a id="loginIcon">
-      <img
-        src="./images/tres_lineas.png"
-        alt="Inicio de sesión"
-        id="Login_Icon"
-      />
-    </a>
+    
+    
 
     <div id="loginFormContainer">
       <form id="loginForm">
