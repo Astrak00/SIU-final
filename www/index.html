@@ -37,51 +37,35 @@
           </div>
         </div>
       </div>
-    
+
       <div id="products">
-        <div class="product" id="product1" data-categoria="electronica">
-          <img
-            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ebay.es%2Fitm%2F404212691917&psig=AOvVaw2hBk4rj8G8kHglRSWSMOfQ&ust=1712391880176000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLDKhMPTqoUDFQAAAAAdAAAAABAE"
-            alt="Product 1"
-          />
-          <h2>Producto 1</h2>
-          <p>Precio: $10</p>
-          <button onclick="addProduct({name: 'Product 1', price: 10})">
-            Añadir al carrito
-          </button>
-        </div>
-        <div class="product" id="product2" data-categoria="alimentacion">
-          <img src="https://example.com/anillo.jpg" alt="Product 2" />
-          <h2>Producto 2</h2>
-          <p>Precio: $15</p>
-          <button>
-            Añadir al carrito
-          </button>
-        </div>
-        
-      
+        <!-- Productos -->
       </div>
     </section>
     <a id="cartLink" onclick="showCart()">
-      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon">
+      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
     </a>
     <section id="carro">
-      <h1>Carrito de Compra</h1>   
+      <h1>Carrito de Compra</h1>
       <!-- Carrito de Compra -->
       <div id="cart">
-          <ul id="cart-items"></ul>
-          <p id="cart-total">Total: $<span id="totalAmount">0.00</span></p>
+        <ul id="cart-items"></ul>
+        <p id="cart-total">Total: $<span id="totalAmount">0.00</span></p>
       </div>
     </section>
 
-    <a id="loginIcon"> 
-      <img src="./images/tres_lineas.png" alt="Inicio de sesión" id="Login_Icon">
+    <a id="loginIcon">
+      <img
+        src="./images/tres_lineas.png"
+        alt="Inicio de sesión"
+        id="Login_Icon"
+      />
     </a>
-    
-    <div id="loginFormContainer"> 
+
+    <div id="loginFormContainer">
       <form id="loginForm">
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
         <button type="submit" onclick="Submitform()">Login</button>
       </form>
     </div>
