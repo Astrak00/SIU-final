@@ -15,6 +15,51 @@ socket.on("loginResult", function (result) {
   }
 });
 
+function showCart() {
+  const cart_page = document.getElementById("carro");
+  const main_page = document.getElementById("main_page");
+  const form_page = document.getElementById("formularios");
+  console.log(main_page.style.display = "block");
+
+  if (main_page.style.display == "block" || cart_page == "none") {
+    cart_page.style.display = "block";
+    main_page.style.display = "none";
+    form_page.style.display = "none"
+  } else if (form_page.style.display == "block"){
+    cart_page.style.display = "block";
+    main_page.style.display = "none";
+    form_page.style.display = "none"
+  } else if (cart_page.style.display == "block"){
+    cart_page.style.display = "none";
+    main_page.style.display = "block";
+    form_page.style.display = "none"
+  }
+  socket.emit("loadFavourites");
+}
+
+
+function showForm() {
+  console.log("vaya")
+  const cart_page = document.getElementById("carro");
+  const main_page = document.getElementById("main_page");
+  const form_page = document.getElementById("formularios");
+  console.log(cart_page.style.display = "block");
+  
+  if (main_page.style.display == "block" || form_page == "none") {
+    cart_page.style.display = "none";
+    main_page.style.display = "none";
+    form_page.style.display = "block"
+  } else if (form_page.style.display == "block"){
+    cart_page.style.display = "none";
+    main_page.style.display = "block";
+    form_page.style.display = "none"
+  } else if (cart_page.style.display == "block"){
+    cart_page.style.display = "none";
+    main_page.style.display = "none";
+    form_page.style.display = "block"
+  }
+}
+
 socket.on("addProductResult", function (result) {
   if (result.success) {
     showModal(result.message, 0);
@@ -41,19 +86,6 @@ socket.on("productDeleted", (response) => {
 function addProduct(event, newProduct) {
   event.preventDefault();
   socket.emit("addProduct", newProduct);
-}
-
-function showCart() {
-  const cart_page = document.getElementById("carro");
-  const main_page = document.getElementById("main_page");
-  if (cart_page.style.display == "none") {
-    cart_page.style.display = "block";
-    main_page.style.display = "none";
-  } else {
-    cart_page.style.display = "none";
-    main_page.style.display = "block";
-  }
-  socket.emit("loadFavourites");
 }
 
 // Función para eliminar un producto
@@ -306,16 +338,6 @@ document
   .getElementById("filtro-precio")
   .addEventListener("change", filterProducts);
 
-  
-document.getElementById("loginIcon").addEventListener("click", function () {
-  console.log("HERE");
-  const loginFormContainer = document.getElementById("loginFormContainer");
-  if (loginFormContainer.style.display == "none") {
-    loginFormContainer.style.display = "block";
-  } else {
-    loginFormContainer.style.display = "none";
-  }
-});
 
 // Manejar el envío del formulario de inicio de sesión
 function Submitform() {

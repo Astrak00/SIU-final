@@ -159,27 +159,6 @@ header {
 }
 
 
-#loginFormContainer{
-  position: fixed;
-  top: 100px;
-  left: 10px;
-  width: 100px;
-  height: auto;
-  justify-content: center;
-  text-align: center;
-  display: block;
-}
-
-#loginForm :nth-child(1){
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-#loginForm :nth-child(2){
-  margin-bottom: 10px;
-  width: 100%;
-}
-
 #carro{
   display: none;
 }
@@ -215,6 +194,93 @@ header {
   font-weight: bold;
 }
 
+#formularios{
+  display: none;
+}
+
+#Login_Icon {
+  margin: 20px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 50px; /* Tamaño de la imagen */
+  height: auto;
+  cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
+}
+
+#contenedor-formularios{
+  display: grid;
+  grid-template: 1fr 9fr / 4fr 2fr 4fr;
+  justify-items: center;
+  height: 100vh;
+}
+
+#loginFormContainer{
+  grid-column: 1 / 1;
+  grid-row: 2 / 2;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+#loginFormContainer h1{
+ margin-top: 10%;
+ font-size: 4vh;
+}
+
+#loginForm{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10%;
+  width: 70%;
+}
+
+#loginForm input{
+  height: 3vh;
+  margin-bottom: 15%;
+  width: 95%;
+}
+
+#loginForm button{
+  margin-top: 10%;
+  height: 5vh;
+  font-size: 3vh;
+  width: 70%;
+}
+
+
+#signUpFormContainer{
+  grid-column: 3 / 3;
+  grid-row: 2 / 2;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+#signUpFormContainer h1{
+  margin-top: 10%;
+  font-size: 4vh;
+ }
+
+#signUpForm{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10%;
+  width: 70%;
+}
+
+#signUpForm input{
+  height: 3vh;
+  margin-bottom: 15%;
+  width: 95%;
+}
+
+#signUpForm button{
+  margin-top: 10%;
+  height: 5vh;
+  font-size: 3vh;
+  width: 70%;
+}
 
 #voice {
   display: none;
