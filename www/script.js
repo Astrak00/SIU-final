@@ -29,8 +29,13 @@ socket.on("loadFavouritesResult", (data) => {
   load_carrito(data);
 });
 
-socket.on("productDeleted", (productId) => {
-  socket.emit("loadFavourites");
+socket.on("productDeleted", (response) => {
+  if (response.success){
+    socket.emit("loadFavourites");
+  }
+  else{
+    showModal(response.message, 1);
+  }
 });
 
 // Función para agregar un producto
@@ -53,7 +58,9 @@ function showCart() {
 }
 
 // Función para eliminar un producto
-function deleteProduct(productId) {
+function deleteProduct(event, productId) {
+  event.preventDefault();
+  console.log("Aqui");
   socket.emit("deleteProduct", productId);
 }
 
@@ -68,6 +75,11 @@ function showModal(message, err) {
   }
   errorMessageElement.textContent = message;
   modal.style.display = "block";
+
+  // Cerrar automáticamente el modal después de 2 segundos
+  setTimeout(() => {
+    closeModal();
+  }, 1100);
 }
 
 // Cerrar la caja de confirmaciones/errores
@@ -157,10 +169,12 @@ function load_carrito(data) {
     const price_product = document.createElement("p");
     price_product.textContent = `${product.price}`;
 
-    const delete_button = document.createElement("button");
-    delete_button.textContent = "Eliminar";
+    const delete_button = document.createElement("img");
+    delete_button.src = "./images/papelera.png";
+    delete_button.style.width = "20px";
+    delete_button.style.height = "20px";
     delete_button.onclick = (event) => {
-      deleteProduct(product.id);
+      deleteProduct(event, product.name);
     };
 
     // Agregar los elementos span al elemento de contacto

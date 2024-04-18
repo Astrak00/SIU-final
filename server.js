@@ -55,10 +55,19 @@ function load_favourites() {
 }
 
 // Guardar la lista de contactos en agenda.json
-function save_favourite(socket) {
+function save_favourite(socket, user) {
+  // Obtener la lista de productos favoritos del usuario especificado
+  let userProducts = favourite_products[user];
+
+  // Si el usuario no tiene productos favoritos, crear una lista vacía
+  if (!userProducts) {
+    userProducts = [];
+  }
+
+  // Escribir la lista de productos favoritos del usuario en el archivo JSON
   fs.writeFile(
     "./favourite_products.json",
-    JSON.stringify(favourite_products, null, 2),
+    JSON.stringify({ [user]: userProducts }, null, 2),
     (err) => {
       if (err) {
         socket.emit("addProductResult", {
@@ -68,12 +77,13 @@ function save_favourite(socket) {
         console.error("Error al guardar la lista de productos:", err);
         return -1;
       } else {
+        console.log(`Lista de productos de ${user} guardada correctamente.`);
         return 0;
       }
     }
   );
-  return 0;
 }
+
 
 // Registros de usuarios
 const users = [
@@ -135,7 +145,7 @@ io.on("connection", (socket) => {
     favourite_products[current_user].push(newProduct);
     // Guardar los cambios de vuelta al archivo JSON
 
-    if (save_favourite() != 0) {
+    if (save_favourite(socket, current_user) != 0) {
       console.error("Error al guardar la lista de productos", "11");
       return;
     }
@@ -147,11 +157,24 @@ io.on("connection", (socket) => {
 
   // Eliminar un producto
   socket.on("deleteProduct", (productId) => {
-    const index = products.findIndex((product) => product.id === productId);
+    console.log("Vamos a borrar: ", productId);
+    if (load_favourites() != 0) {
+      return;
+    }
+    current_user = active_users.find((user) => user.id === socket.id).username;
+    if (current_user == null){
+      socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
+    }
+    const index = favourite_products[current_user].find((product) => 
+            product.name === productId);
+    console.log(index);
     if (index !== -1) {
-      products.splice(index, 1);
-      save_favourite();
-      io.emit("productDeleted", productId);
+      favourite_products[current_user].splice(index, 1);
+      save_favourite(socket, current_user);
+      socket.emit("productDeleted", { success: true });
+    }
+    else{
+      socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
     }
   });
 

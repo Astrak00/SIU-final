@@ -1,10 +1,6 @@
 {
   "1": [
     {
-      "name": "Smartwatch",
-      "price": 129.99
-    },
-    {
       "name": "Altavoz Bluetooth",
       "price": 49.99
     },
@@ -31,6 +27,10 @@
     {
       "name": "Zapatos deportivos",
       "price": 59.99
+    },
+    {
+      "name": "Camiseta de algodón",
+      "price": 15.99
     }
   ]
 }
