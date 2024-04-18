@@ -39,50 +39,48 @@ function load_all_products() {
 }
 
 // Meter en el carro de alguien
-function load_favourites() {
-  try {
-    const data = fs.readFileSync("./favourite_products.json", "utf8");
-    favourite_products = JSON.parse(data);
-    return 0;
-  } catch (err) {
-    socket.emit("addProductResult", {
-      success: false,
-      message: "Error al cargar la lista",
-    });
-    console.error("Error al guardar la lista de contactos:", err);
-    return -1;
-  }
+function load_favourites(socket) {
+  return new Promise((resolve, reject) => {
+    try {
+      const data = fs.readFileSync("./favourite_products.json", "utf8");
+      favourite_products = JSON.parse(data);
+      resolve(0); // Resuelve la promesa con éxito
+    } catch (err) {
+      socket.emit("addProductResult", {
+        success: false,
+        message: "Error al cargar la lista",
+      });
+      console.error("Error al cargar la lista de contactos:", err);
+      reject(err); // Rechaza la promesa en caso de error
+    }
+  });
 }
+
 
 // Guardar la lista de contactos en agenda.json
-function save_favourite(socket, user) {
-  // Obtener la lista de productos favoritos del usuario especificado
-  let userProducts = favourite_products[user];
-
-  // Si el usuario no tiene productos favoritos, crear una lista vacía
-  if (!userProducts) {
-    userProducts = [];
-  }
-
-  // Escribir la lista de productos favoritos del usuario en el archivo JSON
-  fs.writeFile(
-    "./favourite_products.json",
-    JSON.stringify({ [user]: userProducts }, null, 2),
-    (err) => {
-      if (err) {
-        socket.emit("addProductResult", {
-          success: false,
-          message: "Error al guardar la lista",
-        });
-        console.error("Error al guardar la lista de productos:", err);
-        return -1;
-      } else {
-        console.log(`Lista de productos de ${user} guardada correctamente.`);
-        return 0;
-      }
+function save_favourite() {
+  return new Promise((resolve, reject) => {
+    try {
+      // Escribir los nuevos datos en el archivo JSON
+      fs.writeFile('./favourite_products.json', JSON.stringify(favourite_products, null, 2), (err) => {
+        if (err) {
+          console.error("Error al guardar la lista de productos:", err);
+          reject(err); // Rechazar la promesa si hay un error
+        } else {
+          console.log(`Lista de productos guardada correctamente.`);
+          resolve(0); // Resolver la promesa si la operación es exitosa
+        }
+      });
+    } catch (err) {
+      console.error("Error al guardar la lista de productos:", err);
+      reject(err); // Rechazar la promesa en caso de error
     }
-  );
+  });
 }
+
+
+
+
 
 
 // Registros de usuarios
@@ -108,7 +106,7 @@ io.on("connection", (socket) => {
   socket.emit("products", products);
 
   // Agregar un nuevo producto
-  socket.on("addProduct", (newProduct) => {
+  socket.on("addProduct", async (newProduct) => {
     console.log("Recibido añadir nuevo producto", newProduct);
     if (active_users.find((user) => user.id === socket.id).username == null) {
       console.log("El usuario no iniciado sesión", favourite_products);
@@ -118,59 +116,77 @@ io.on("connection", (socket) => {
       });
       return;
     }
-    if (load_favourites() != 0) {
-      return;
-    }
-    console.log(
-      "El usuario está registrado, y este es su carrito:",
-      favourite_products
-    );
-    // Agregar artículos al usuario
-    current_user = active_users.find((user) => user.id === socket.id).username;
-
-    if (favourite_products[current_user] == null) {
-      favourite_products[current_user] = [];
-    }
-    if (
-      favourite_products[current_user].find(
-        (product) => product.name === newProduct.name
-      )
-    ) {
+    try {
+      if (await load_favourites(socket) != 0) {
+        socket.emit("addProductResult", {
+          success: false,
+          message: "Error al cargar la lista",
+        });
+        return;
+      }
+      console.log(
+        "El usuario está registrado, y este es su carrito:",
+        favourite_products
+      );
+      // Agregar artículos al usuario
+      current_user = active_users.find((user) => user.id === socket.id).username;
+  
+      if (favourite_products[current_user] == null) {
+        favourite_products[current_user] = [];
+      }
+      if (
+        favourite_products[current_user].find(
+          (product) => product.name === newProduct.name
+        )
+      ) {
+        socket.emit("addProductResult", {
+          success: true,
+          message: "Producto ya está en la lista",
+        });
+        return;
+      }
+      favourite_products[current_user].push(newProduct);
+  
+      // Guardar los cambios de vuelta al archivo JSON
+      await save_favourite();
+      console.log("Producto añadido con éxito");
       socket.emit("addProductResult", {
         success: true,
-        message: "Producto ya está en la lista",
+        message: "Producto guardado correctamente",
       });
-      return;
+    } catch (error) {
+      console.error("Error en la operación de agregar producto:", error);
+      socket.emit("addProductResult", {
+        success: false,
+        message: "Error al agregar producto",
+      });
     }
-    favourite_products[current_user].push(newProduct);
-    // Guardar los cambios de vuelta al archivo JSON
-
-    if (save_favourite(socket, current_user) != 0) {
-      console.error("Error al guardar la lista de productos", "11");
-      return;
-    }
-    socket.emit("addProductResult", {
-      success: true,
-      message: "Producto guardado correctamente Nano",
-    });
   });
-
   // Eliminar un producto
-  socket.on("deleteProduct", (productId) => {
+  socket.on("deleteProduct", async (productId) => {
     console.log("Vamos a borrar: ", productId);
-    if (load_favourites() != 0) {
+    if (await load_favourites(socket) != 0) {
+      socket.emit("productDeleted", {
+        success: false,
+        message: "Error al cargar la lista",
+      });
       return;
     }
     current_user = active_users.find((user) => user.id === socket.id).username;
     if (current_user == null){
       socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
+      return; // Agregar un return para salir de la función si el usuario no está registrado
     }
-    const index = favourite_products[current_user].find((product) => 
-            product.name === productId);
+    const index = favourite_products[current_user].findIndex((product) => 
+            product.name === productId); // Usar findIndex() en lugar de find()
     console.log(index);
     if (index !== -1) {
       favourite_products[current_user].splice(index, 1);
-      save_favourite(socket, current_user);
+      if (await save_favourite() != 0){
+        console.log("Error al guardar la lista tras borrar el producto");
+        socket.emit("productDeleted", { success: false, message: "Error al borrar el producto" });
+        return; // Agregar un return para salir de la función si hay un error al guardar
+      };
       socket.emit("productDeleted", { success: true });
     }
     else{
@@ -179,7 +195,7 @@ io.on("connection", (socket) => {
   });
 
   // Manejar el evento de inicio de sesión
-  socket.on("login", function (credentials) {
+  socket.on("login", async function (credentials) {
     const { username, password } = credentials;
     // Aquí verificarías las credenciales de inicio de sesión
     console.log("Buscamos el usuario");
@@ -200,7 +216,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("loadFavourites", function () {
+  // Manejar el evento de carga de favoritos
+  socket.on("loadFavourites", async function () {
     if (active_users.find((user) => user.id === socket.id).username == null) {
       console.log("El usuario no está iniciado sesión", favourite_products);
       socket.emit("loadFavouritesResult", {
@@ -208,7 +225,7 @@ io.on("connection", (socket) => {
         message: "El usuario no iniciado sesión",
       });
     } else {
-      if (load_favourites() != 0) {
+      if (await load_favourites(socket) != 0) {
         socket.emit("loadFavouritesResult", {
           success: false,
           message: "Error al cargar la lista",
@@ -230,6 +247,7 @@ io.on("connection", (socket) => {
       );
     }
   });
+
 });
 
 const PORT = 3000;
