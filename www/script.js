@@ -341,6 +341,7 @@ function Submitform() {
   const password = document.getElementById("password").value.toString();
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
+  showCart();
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("login", { username, password });
 }

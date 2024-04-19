@@ -56,6 +56,7 @@ function load_favourites(socket) {
   });
 }
 
+
 // Guardar la lista de contactos en agenda.json
 function save_favourite() {
   return new Promise((resolve, reject) => {
@@ -154,6 +155,7 @@ io.on("connection", (socket) => {
           message: "Erro al guardar el producto",
         });
       }
+
       console.log("Producto añadido con éxito");
       socket.emit("addProductResult", {
         success: true,
