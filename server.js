@@ -194,6 +194,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  
   // Manejar el evento de inicio de sesión
   socket.on("login", async function (credentials) {
     const { username, password } = credentials;
@@ -215,6 +216,39 @@ io.on("connection", (socket) => {
       });
     }
   });
+
+  socket.on("signup", async function (credentials) {
+    const { username, password } = credentials;
+    console.log({ username, password });
+    // Check if the user already exists in the database
+    const user = users.find(
+      (user) => user.username === username
+    );
+    console.log(user);
+    if (user) {
+        // User already exists, send failure message
+        socket.emit("signupResult", {
+            success: false,
+            message: "User already exists",
+        });
+        return;
+    }
+
+    const id = 1;
+
+    const newUser = {
+      username,
+      password,
+      id,
+    };
+
+    users.push(newUser);
+
+    console.log(users);
+
+  });
+
+
 
   // Manejar el evento de carga de favoritos
   socket.on("loadFavourites", async function () {

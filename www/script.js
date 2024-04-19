@@ -350,7 +350,17 @@ function Submitform() {
   socket.emit("login", { username, password });
 }
 
-
+// Manejar el envío del formulario de inicio de sesión
+function Submitformsignup() {
+  event.preventDefault();
+  const username = document.getElementById("username_signup").value.toString();
+  const password = document.getElementById("password_signup").value.toString();
+  document.getElementById("username_signup").value = "";
+  document.getElementById("password_signup").value = "";
+  document.getElementById("password2").value = "";
+  // Enviar los datos de inicio de sesión al servidor a través de sockets
+  socket.emit("signup", { username, password });
+}
 
 
 
