@@ -13,13 +13,14 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://127.0.0.1:5500",
+    origin: "http://127.0.0.1:3000",
     methods: ["GET", "POST"],
   },
 });
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, ".")));
 
 const productsFilePath = "./products.json";
 let products = [];
@@ -55,7 +56,6 @@ function load_favourites(socket) {
     }
   });
 }
-
 
 // Guardar la lista de contactos en agenda.json
 function save_favourite() {
@@ -213,7 +213,6 @@ io.on("connection", (socket) => {
     }
   });
 
-  
   // Manejar el evento de inicio de sesión
   socket.on("login", async function (credentials) {
     const { username, password } = credentials;
@@ -240,17 +239,15 @@ io.on("connection", (socket) => {
     const { username, password } = credentials;
     console.log({ username, password });
     // Check if the user already exists in the database
-    const user = users.find(
-      (user) => user.username === username
-    );
+    const user = users.find((user) => user.username === username);
     console.log(user);
     if (user) {
-        // User already exists, send failure message
-        socket.emit("signupResult", {
-            success: false,
-            message: "User already exists",
-        });
-        return;
+      // User already exists, send failure message
+      socket.emit("signupResult", {
+        success: false,
+        message: "User already exists",
+      });
+      return;
     }
 
     const id = 1;
@@ -264,10 +261,7 @@ io.on("connection", (socket) => {
     users.push(newUser);
 
     console.log(users);
-
   });
-
-
 
   // Manejar el evento de carga de favoritos
   socket.on("loadFavourites", async function () {
