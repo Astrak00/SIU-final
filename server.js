@@ -148,7 +148,13 @@ io.on("connection", (socket) => {
       favourite_products[current_user].push(newProduct);
   
       // Guardar los cambios de vuelta al archivo JSON
-      await save_favourite();
+      
+      if (await save_favourite() != 0){
+        socket.emit("addProductResult", {
+          success: false,
+          message: "Erro al guardar el producto",
+        });
+      }
       console.log("Producto añadido con éxito");
       socket.emit("addProductResult", {
         success: true,

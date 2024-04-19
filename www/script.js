@@ -19,7 +19,6 @@ function showCart() {
   const cart_page = document.getElementById("carro");
   const main_page = document.getElementById("main_page");
   const form_page = document.getElementById("formularios");
-  console.log((main_page.style.display = "block"));
 
   if (main_page.style.display == "block" || cart_page == "none") {
     cart_page.style.display = "block";
@@ -344,6 +343,7 @@ function Submitform() {
   const password = document.getElementById("password").value.toString();
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
+  showCart();
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("login", { username, password });
 }
