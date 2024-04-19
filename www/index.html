@@ -9,7 +9,20 @@
   </head>
   <body>
     <header>
-      <h1>Tienda Online</h1>
+      <a id="loginIcon" class="box" onclick="displayForm()">
+        <img
+          src="./images/tres_lineas.png"
+          alt="Inicio de sesión"
+          id="Login_Icon"
+        />
+      </a>
+      <h1 id = "title" onclick="displayMain()" class="box">Tienda Online</h1>
+      <a onclick="showMic()"  class="box">
+        <img id="voice_activator", src="./images/microfono.png" alt="Microfono"/>
+      </a>
+      <a id="cartLink"  class="box" onclick="displayCart()">
+        <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+      </a>
     </header>
     <section id="main_page">
       <div class="container-filtro">
@@ -38,13 +51,12 @@
           </div>
         </div>
       </div>
-
       <div id="products">
         <!-- Productos -->
       </div>
     </section>
-    <a id="cartLink" onclick="showCart()">
-      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+    <a id = "voice">
+      <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
     </a>
     <section id="carro">
       <h1>Carrito de Compra</h1>
@@ -55,22 +67,27 @@
       </div>
     </section>
 
-    <a id="loginIcon">
-      <img
-        src="./images/tres_lineas.png"
-        alt="Inicio de sesión"
-        id="Login_Icon"
-      />
-    </a>
-
-    <div id="loginFormContainer">
-      <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
-        <button type="submit" onclick="Submitform()">Login</button>
-      </form>
-    </div>
-
+    <section id="formularios">
+      <div id="contenedor-formularios">
+        <div id="loginFormContainer">
+          <h1>Inicio de Sesión</h1>
+          <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button type="submit" onclick="Submitform()">Login</button>
+          </form>
+        </div>
+        <div id="signUpFormContainer">
+          <h1>Registro</h1>
+          <form id="signUpForm">
+            <input type="text" id="username_signup" placeholder="Username" />
+            <input type="password" id="password_signup" placeholder="Password" />
+            <input type="password" id="password2" placeholder="Confirm Password" />
+            <button type="submit" onclick="Submitformsignup()">Register</button>
+          </form>
+      </div>
+    </section>
+    
     <div id="error-modal" class="modal">
       <div id="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
