@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda Online</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Tienda Online</h1>
+    </header>
+    <section id="main_page">
+      <div id="añadir">
+      <button onclick="mostrarCuestionario()">Añadir producto</button>
+    </div>
+      <form id="añadir_producto" onsubmit="enviarRespuestas(event)">
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div>
+          <label for="precio">Precio:</label>
+          <input type="number" id="precio" name="precio" required>
+        </div>
+        <div>
+          <label for="src">Cantidad:</label>
+          <input type="number" id="catidad" name="cantidad" required>
+        </div>
+        <div>
+          <label for="src">Enlace:</label>
+          <input type="url" id="enlace" name="enlace" required>
+        </div>
+        <div>
+          <label for="categoria">Categoría:</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Electrónica">Electrónica</option>
+            <option value="Ropa">Ropa</option>
+            <option value="Hogar">Accesorios</option>
+          </select>
+        </div>
+        <div>
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" required></textarea>
+        </div>
+        <button type="submit">Enviar</button>
+        <button class="boton" onclick="ocultarCuestionario()">Cerrar</button>
+      </form>
+        
+
+      </section>
+
+
+      <div id="products">
+        <!-- Productos -->
+      </div>
+    </section>
+    <a id="cartLink" onclick="showCart()">
+      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+    </a>
+
+
+    <div id="error-modal" class="modal">
+      <div id="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="error-message"></p>
+      </div>
+    </div>
+    <script src="boton.js"></script>
+  </body>
+</html>
