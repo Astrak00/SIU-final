@@ -6,7 +6,7 @@ var fav_products = [];
 
 const comandos_viajar_carro = ["carrito", "carro", "favoritos", "guardados", "cesta", "volver", "pagina principal"];
 const comandos_sesion = ["login", "log in", "sign up", "sesion", "signup", "china", "iniciar sesion", "suscribirse", "crear cuenta", "acceso", "inicio de sesion"];
-
+const comandos_lectura = ["dictar", "leer", "enumerar", "lista", "productos", "enumerar lista", "enumerar lista de productos"]
 socket.on("products", (data) => {
   all_products = data;
   console.log("Productos recibidos");
@@ -406,51 +406,11 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     // remove the tildes and accents
     const transcriptNormalized = transcript
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "").trim().replace(/\.$/, '');
+      .replace(/[\u0300-\u036f]/g, "").replace(/\.$/, '');
     console.log("Texto reconocido normalizado:", transcriptNormalized);
     
     let found = false;
-    if (main_page.style.display == "block" || main_page.style.display == ""){
-      all_products.forEach((product) => {
-        if (!found){
-          let aux = product.nombre.toLowerCase().normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "").trim();
-          //console.log(aux, transcriptNormalized);
-          //console.log(aux.includes(transcriptNormalized));
-          if (aux.includes(transcriptNormalized)){
-              addProduct({ name: product.nombre, price: product.precio });
-              found = true;
-              return false;
-          }
-        }
-      });
-    }
-    else if (cart_page.style.display == "block"){
-      all_products.forEach((product) => {
-        if (!found){
-          let aux = product.nombre.toLowerCase().normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "").trim();
-          //console.log(aux, transcriptNormalized);
-          //console.log(aux.includes(transcriptNormalized));
-          if (aux.includes(transcriptNormalized)){
-              deleteProduct(product.nombre);
-              found = true;
-              return false;
-          }
-        }
-      });
-      if (transcriptNormalized.includes("siguiente")){
-        nextProduct();
-        found = true;
-      }
-      else if (transcriptNormalized.includes("borrar")){
-        deleteProduct(fav_products[currentIndex].name);
-        found = true;
-      }
-    }
-    else{
-      voiceContainer.style.display = "none";
-    }
+
     if (comandos_viajar_carro.includes(transcriptNormalized)){
       if (transcriptNormalized == "volver" || transcriptNormalized == "pagina principal"){
         displayMain();
@@ -461,10 +421,59 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       found = true;
     }
     
-    if (comandos_sesion.includes(transcriptNormalized)){
+    else if (comandos_sesion.includes(transcriptNormalized)){
       displayForm();
       found = true;
-    }    
+    }
+    else if (comandos_lectura.includes(transcriptNormalized)){
+      speakProductList();
+      found = true;
+    }
+    else{
+
+      if (main_page.style.display == "block" || main_page.style.display == ""){
+        all_products.forEach((product) => {
+          if (!found){
+            let aux = product.nombre.toLowerCase().normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "").trim();
+            //console.log(aux, transcriptNormalized);
+            //console.log(aux.includes(transcriptNormalized));
+            if (aux.includes(transcriptNormalized)){
+                addProduct({ name: product.nombre, price: product.precio });
+                found = true;
+                return false;
+            }
+          }
+        });
+      }
+      else if (cart_page.style.display == "block"){
+        all_products.forEach((product) => {
+          if (!found){
+            let aux = product.nombre.toLowerCase().normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "").trim();
+            //console.log(aux, transcriptNormalized);
+            //console.log(aux.includes(transcriptNormalized));
+            if (aux.includes(transcriptNormalized)){
+                deleteProduct(product.nombre);
+                found = true;
+                return false;
+            }
+          }
+        });
+        if (transcriptNormalized.includes("siguiente")){
+          nextProduct();
+          found = true;
+        }
+        else if (transcriptNormalized.includes("borrar")){
+          deleteProduct(fav_products[currentIndex].name);
+          found = true;
+        }
+      }
+      else{
+        voiceContainer.style.display = "none";
+      }
+    }
+
     if (!found){
       showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
@@ -474,6 +483,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   // Configurar el evento de error del reconocimiento de voz
   recognition.onerror = (event) => {
     console.error("Error en el reconocimiento de voz:", event.error);
+    voiceContainer.style.backgroundColor = "white";
   };
 
   // Configurar el evento click del botón de voz
@@ -535,4 +545,17 @@ window.addEventListener('deviceorientation', (event) => {
   }
 });
 
+///////////////// DICTAR LA LISTA DE PRODUCTOS ///////////////
+function speakProductList() {
+  const synthesis = window.speechSynthesis; 
+  if (!synthesis) {
+    console.error('La síntesis de voz no está disponible en este navegador.');
+    return;
+  }
+  const utterance = new SpeechSynthesisUtterance(); 
+  const productList = all_products.map(product => product.nombre).join(', '); 
+  console.log(productList);
+  utterance.text = productList; 
 
+  synthesis.speak(utterance);
+}
