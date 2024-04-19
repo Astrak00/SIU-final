@@ -230,6 +230,11 @@ function load_carrito(data) {
     delete_button.onclick = (event) => {
       deleteProduct(product.name);
     };
+    // Añadir evento tactil para cambiar manualmente el seleccionado
+    productElement.addEventListener("click", () => {
+      currentIndex = index; 
+      load_carrito(fav_products); 
+    });
 
     // Agregar los elementos span al elemento de contacto
     //productElement.appendChild(img_product);
