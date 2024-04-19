@@ -334,3 +334,7 @@ label {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
   font-weight: bold; /* Texto en negrita */
 }
+
+.selected {
+  border: 2px solid red;
+}

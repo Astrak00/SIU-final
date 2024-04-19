@@ -104,7 +104,6 @@ function addProduct(newProduct) {
 // Función para eliminar un producto
 function deleteProduct(event, productId) {
   event.preventDefault();
-  console.log("Aqui");
   socket.emit("deleteProduct", productId);
 }
 
@@ -195,12 +194,23 @@ function renderlist(data) {
   });
 }
 
+let currentIndex = 0;
+
+function nextProduct() {
+  currentIndex++;
+  if (currentIndex >= fav_products.length) {
+    currentIndex = 0;
+  }
+  load_carrito(fav_products);
+}
+
+
 function load_carrito(data) {
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
   f_list.textContent = "";
   let amount = 0;
-  data.forEach((product) => {
+  data.forEach((product, index) => {
     const productElement = document.createElement("div");
     productElement.classList.add("product");
     /*
@@ -231,20 +241,14 @@ function load_carrito(data) {
     // Agregar el elemento de contacto al elemento de lista de contactos
     f_list.appendChild(productElement);
     amount += parseFloat(product.price);
+    // Aplicar la clase 'selected' al producto seleccionado
+    if (index === currentIndex) {
+      productElement.classList.add("selected");
+    }
   });
   total.textContent = amount;
 }
 
-const textInput = document.getElementById("textInput");
-const speakButton = document.getElementById("speakButton");
-
-/*
-speakButton.addEventListener("click", () => {
-  const textToSpeak = textInput.value;
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
-  speechSynthesis.speak(utterance);
-});
-*/
 
 function actulizarFiltroCategorias() {
   var categoriaSelect = document.getElementById("filtro-categoria");
@@ -489,3 +493,40 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   console.error("El navegador no admite la Web Speech API");
   voiceButton.disabled = true;
 }
+
+
+/////////////////// GIROSCOPIO ////////////////////////
+
+let actionExecuted = false;
+
+window.addEventListener('deviceorientation', (event) => {
+  const beta = event.beta; 
+  const gamma = event.gamma; 
+  if (cart_page.style.display == "block" && !actionExecuted) {
+    // Cambiar de producto si se inclina
+    if (beta < 15) {
+      console.log("Next");
+      nextProduct();
+      actionExecuted = true;
+      setTimeout(() => {
+        actionExecuted = false;
+      }, 1000);
+    }
+    
+    // Borrar si se gira a la derecha
+    if (gamma > 35) {
+      console.log("Giro");
+      const confirmation = window.confirm("¿Estás seguro de que quieres borrar este producto?");
+      console.log(fav_products[currentIndex]);
+      if (confirmation) {
+        deleteProduct(event, fav_products[currentIndex].name);
+        actionExecuted = true;
+        setTimeout(() => {
+          actionExecuted = false;
+        }, 1000);
+      }
+    }
+  }
+});
+
+

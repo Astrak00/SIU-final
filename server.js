@@ -180,7 +180,7 @@ io.on("connection", (socket) => {
     if (current_user == null) {
       socket.emit("productDeleted", {
         success: false,
-        message: "Error al borrar el producto",
+        message: "Primero tienes que iniciar sesión",
       });
       return; // Agregar un return para salir de la función si el usuario no está registrado
     }

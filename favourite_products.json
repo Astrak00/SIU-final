@@ -1,24 +1,8 @@
 {
   "1": [
     {
-      "name": "Portátil",
-      "price": 899.99
-    },
-    {
-      "name": "Camiseta de algodón",
-      "price": 15.99
-    },
-    {
-      "name": "Collar de perlas",
-      "price": 49.99
-    },
-    {
       "name": "Tableta",
       "price": 299.99
-    },
-    {
-      "name": "Reloj de pulsera",
-      "price": 79.99
     },
     {
       "name": "Altavoz Bluetooth",
