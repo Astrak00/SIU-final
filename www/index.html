@@ -9,18 +9,18 @@
   </head>
   <body>
     <header>
-      <a id="loginIcon" class="box" onclick="showForm()">
+      <a id="loginIcon" class="box" onclick="displayForm()">
         <img
           src="./images/tres_lineas.png"
           alt="Inicio de sesión"
           id="Login_Icon"
         />
       </a>
-      <h1 id = "title"  class="box">Tienda Online</h1>
+      <h1 id = "title" onclick="displayMain()" class="box">Tienda Online</h1>
       <a onclick="showMic()"  class="box">
         <img id="voice_activator", src="./images/microfono.png" alt="Microfono"/>
       </a>
-      <a id="cartLink"  class="box" onclick="showCart()">
+      <a id="cartLink"  class="box" onclick="displayCart()">
         <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
       </a>
     </header>
@@ -51,14 +51,13 @@
           </div>
         </div>
       </div>
-      <a id = "voice">
-        <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
-      </a>
       <div id="products">
         <!-- Productos -->
       </div>
     </section>
-    
+    <a id = "voice">
+      <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
+    </a>
     <section id="carro">
       <h1>Carrito de Compra</h1>
       <!-- Carrito de Compra -->

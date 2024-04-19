@@ -2,6 +2,10 @@
 const socket = io("http://localhost:3000");
 
 var all_products = [];
+var fav_products = [];
+
+const comandos_viajar_carro = ["carrito", "carro", "favoritos", "guardados", "cesta", "volver"];
+const comandos_sesion = ["login", "log in", "sign up", "sesion", "signup", "china", "iniciar sesion", "suscribirse", "crear cuenta", "acceso", "inicio de sesion"];
 
 socket.on("products", (data) => {
   all_products = data;
@@ -12,53 +16,43 @@ socket.on("products", (data) => {
 socket.on("loginResult", function (result) {
   if (result.success) {
     showModal("Inicio de sesión exitoso", 0);
+    displayMain();
+  } else {
+    // Inicio de sesión fallido, mostrar mensaje de error
+    showModal(result.message, 1);
+  }
+});
+socket.on("signupResult", function (result) {
+  if (result.success) {
+    showModal(result.message, 0);
+    displayMain();
   } else {
     // Inicio de sesión fallido, mostrar mensaje de error
     showModal(result.message, 1);
   }
 });
 
-function showCart() {
-  const cart_page = document.getElementById("carro");
-  const main_page = document.getElementById("main_page");
-  const form_page = document.getElementById("formularios");
+const cart_page = document.getElementById("carro");
+const main_page = document.getElementById("main_page");
+const form_page = document.getElementById("formularios");
 
-  if (main_page.style.display == "block" || cart_page == "none") {
-    cart_page.style.display = "block";
-    main_page.style.display = "none";
-    form_page.style.display = "none";
-  } else if (form_page.style.display == "block") {
-    cart_page.style.display = "block";
-    main_page.style.display = "none";
-    form_page.style.display = "none";
-  } else if (cart_page.style.display == "block") {
-    cart_page.style.display = "none";
-    main_page.style.display = "block";
-    form_page.style.display = "none";
-  }
+function displayCart(){
+  cart_page.style.display = "block";
+  main_page.style.display = "none";
+  form_page.style.display = "none";
   socket.emit("loadFavourites");
 }
 
-function showForm() {
-  console.log("vaya");
-  const cart_page = document.getElementById("carro");
-  const main_page = document.getElementById("main_page");
-  const form_page = document.getElementById("formularios");
-  console.log((cart_page.style.display = "block"));
+function displayForm() {
+  cart_page.style.display = "none";
+  main_page.style.display = "none";
+  form_page.style.display = "block";
+}
 
-  if (main_page.style.display == "block" || form_page == "none") {
-    cart_page.style.display = "none";
-    main_page.style.display = "none";
-    form_page.style.display = "block";
-  } else if (form_page.style.display == "block") {
-    cart_page.style.display = "none";
-    main_page.style.display = "block";
-    form_page.style.display = "none";
-  } else if (cart_page.style.display == "block") {
-    cart_page.style.display = "none";
-    main_page.style.display = "none";
-    form_page.style.display = "block";
-  }
+function displayMain(){
+  cart_page.style.display = "none";
+  main_page.style.display = "block";
+  form_page.style.display = "none";
 }
 
 socket.on("addProductResult", function (result) {
@@ -74,11 +68,31 @@ socket.on("addProductResult", function (result) {
 });
 
 socket.on("loadFavouritesResult", (data) => {
+  if (data.success == false) {
+    showModal(data.message, 1);
+    return;
+  }
+  data = data.message;
+  if (data.length == 0) {
+    showModal("No hay productos en el carrito", 1);
+    return;
+  }
+  fav_products = data;
   load_carrito(data);
 });
 
-socket.on("productDeleted", (response) => {
-  load_carrito(response);
+socket.on("productDeleted", (data) => {
+  if (data.success == false) {
+    showModal(data.message, 1);
+    return;
+  }
+  data = data.message;
+  if (data.length == 0) {
+    showModal("No hay productos en el carrito", 1);
+    return;
+  }
+  fav_products = data;
+  load_carrito(data);
 });
 
 // Función para agregar un producto
@@ -182,15 +196,6 @@ function renderlist(data) {
 }
 
 function load_carrito(data) {
-  if (data.success == false) {
-    showModal(data.message, 1);
-    return;
-  }
-  data = data.message;
-  if (data.length == 0) {
-    showModal("No hay productos en el carrito", 1);
-    return;
-  }
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
   f_list.textContent = "";
@@ -342,7 +347,6 @@ function Submitform() {
   const password = document.getElementById("password").value.toString();
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
-  showCart();
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("login", { username, password });
 }
@@ -352,9 +356,17 @@ function Submitformsignup() {
   event.preventDefault();
   const username = document.getElementById("username_signup").value.toString();
   const password = document.getElementById("password_signup").value.toString();
+  const verify = document.getElementById("password2").value.toString();
   document.getElementById("username_signup").value = "";
   document.getElementById("password_signup").value = "";
   document.getElementById("password2").value = "";
+  if (verify !== password){
+    showModal("Contraseñas no coinciden",1);
+  }
+  console.log(password.trim());
+  if (username.trim() == "" || username == null || password == null || password.trim() == ""){
+    showModal("No se permiten campos vacíos",1);
+  }
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("signup", { username, password });
 }
@@ -387,19 +399,54 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "").trim().replace(/\.$/, '');
     console.log("Texto reconocido normalizado:", transcriptNormalized);
-    console.log(all_products);
+    
     let found = false;
-    all_products.forEach((product) => {
-      let aux = product.nombre.toLowerCase().normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "").trim();
-      console.log(aux, transcriptNormalized);
-      console.log(aux.includes(transcriptNormalized));
-      if (aux.includes(transcriptNormalized)){
-          addProduct({ name: product.nombre, price: product.precio });
-          found = true;
-          return;
+    if (main_page.style.display == "block"){
+      all_products.forEach((product) => {
+        if (!found){
+          let aux = product.nombre.toLowerCase().normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "").trim();
+          console.log(aux, transcriptNormalized);
+          console.log(aux.includes(transcriptNormalized));
+          if (aux.includes(transcriptNormalized)){
+              addProduct({ name: product.nombre, price: product.precio });
+              found = true;
+              return false;
+          }
+        }
+      });
+    }
+    else if (cart_page.style.display == "block"){
+      all_products.forEach((product) => {
+        if (!found){
+          let aux = product.nombre.toLowerCase().normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "").trim();
+          console.log(aux, transcriptNormalized);
+          console.log(aux.includes(transcriptNormalized));
+          if (aux.includes(transcriptNormalized)){
+              addProduct({ name: product.nombre, price: product.precio });
+              found = true;
+              return false;
+          }
+        }
+      });
+    }
+    else{
+      voiceContainer.style.display = "none";
+    }
+    if (comandos_viajar_carro.includes(transcriptNormalized)){
+      if (transcriptNormalized == "volver"){
+        displayMain();
       }
-    });
+      else{
+        displayCart();
+      }
+      found = true;
+    }
+    if (comandos_sesion.includes(transcriptNormalized)){
+      displayForm();
+      found = true;
+    }    
     if (!found){
       showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
@@ -433,7 +480,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (event.target !== voiceActivator) {
       voiceContainer.style.display = "none"; // Ocultar el contenedor del reconocimiento por voz
       recognition.abort(); // Detener el reconocimiento de voz
-      console.log("Reconocimiento de voz detenido");
+      //console.log("Reconocimiento de voz detenido");
     }
   });
 } else {

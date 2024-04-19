@@ -15,6 +15,20 @@
     {
       "name": "Tableta",
       "price": 299.99
+    },
+    {
+      "name": "Reloj de pulsera",
+      "price": 79.99
+    }
+  ],
+  "5": [
+    {
+      "name": "Anillo de plata",
+      "price": 29.99
+    },
+    {
+      "name": "Smartwatch",
+      "price": 129.99
     }
   ]
 }

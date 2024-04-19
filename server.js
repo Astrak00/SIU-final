@@ -135,11 +135,8 @@ io.on("connection", (socket) => {
       if (favourite_products[current_user] == null) {
         favourite_products[current_user] = [];
       }
-      if (
-        favourite_products[current_user].find(
-          (product) => product.name === newProduct.name
-        )
-      ) {
+      if (favourite_products[current_user].find(
+          (product) => product.name === newProduct.name)) {
         socket.emit("addProductResult", {
           success: true,
           message: "Producto ya está en la lista",
@@ -226,7 +223,7 @@ io.on("connection", (socket) => {
       active_users.find((user) => user.id === socket.id).username = username;
       socket.emit("loginResult", { success: true });
     } else {
-      console.log("Usuario NO existe");
+      console.log("Credenciales inválidas");
       // Inicio de sesión fallido
       socket.emit("loginResult", {
         success: false,
@@ -242,15 +239,15 @@ io.on("connection", (socket) => {
     const user = users.find((user) => user.username === username);
     console.log(user);
     if (user) {
-      // User already exists, send failure message
+      // Si el usuario ya existe, mandar error
       socket.emit("signupResult", {
         success: false,
-        message: "User already exists",
+        message: "El usuario ya existe",
       });
       return;
     }
 
-    const id = 1;
+    const id = 4;
 
     const newUser = {
       username,
@@ -259,8 +256,13 @@ io.on("connection", (socket) => {
     };
 
     users.push(newUser);
-
     console.log(users);
+    active_users.find((user) => user.id === socket.id).username = username;
+    console.log(active_users);
+    socket.emit("signupResult", {
+          success: true,
+          message: "Cuenta creada con exito",
+    });
   });
 
   // Manejar el evento de carga de favoritos
@@ -278,6 +280,9 @@ io.on("connection", (socket) => {
           message: "Error al cargar la lista",
         });
         return;
+      }
+      if (favourite_products[current_user] == null){
+        favourite_products[current_user] = [];
       }
 
       socket.emit("loadFavouritesResult", {
