@@ -39,9 +39,9 @@ header {
   cursor: pointer;
 }
 #main_page{
+  display: block;
   height: 85%;
   margin-top: 15%;
-  
 }
 .container-filtro {
   text-align: center;
@@ -306,7 +306,7 @@ header {
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
-  height: 50%;
+  height: 25%;
 }
 
 #voiceButton {

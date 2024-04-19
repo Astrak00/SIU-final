@@ -363,9 +363,10 @@ function Submitformsignup() {
   if (verify !== password){
     showModal("Contraseñas no coinciden",1);
   }
-  console.log(password.trim());
+
   if (username.trim() == "" || username == null || password == null || password.trim() == ""){
     showModal("No se permiten campos vacíos",1);
+    return;
   }
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("signup", { username, password });
@@ -401,13 +402,13 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     console.log("Texto reconocido normalizado:", transcriptNormalized);
     
     let found = false;
-    if (main_page.style.display == "block"){
+    if (main_page.style.display == "block" || main_page.style.display == ""){
       all_products.forEach((product) => {
         if (!found){
           let aux = product.nombre.toLowerCase().normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "").trim();
-          console.log(aux, transcriptNormalized);
-          console.log(aux.includes(transcriptNormalized));
+          //console.log(aux, transcriptNormalized);
+          //console.log(aux.includes(transcriptNormalized));
           if (aux.includes(transcriptNormalized)){
               addProduct({ name: product.nombre, price: product.precio });
               found = true;
@@ -421,8 +422,8 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
         if (!found){
           let aux = product.nombre.toLowerCase().normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "").trim();
-          console.log(aux, transcriptNormalized);
-          console.log(aux.includes(transcriptNormalized));
+          //console.log(aux, transcriptNormalized);
+          //console.log(aux.includes(transcriptNormalized));
           if (aux.includes(transcriptNormalized)){
               addProduct({ name: product.nombre, price: product.precio });
               found = true;
