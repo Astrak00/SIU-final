@@ -1,7 +1,10 @@
 // En el archivo JavaScript del cliente
 const socket = io("http://localhost:3000");
 
+var all_products = [];
+
 socket.on("products", (data) => {
+  all_products = data;
   console.log("Productos recibidos");
   renderlist(data);
 });
@@ -19,44 +22,42 @@ function showCart() {
   const cart_page = document.getElementById("carro");
   const main_page = document.getElementById("main_page");
   const form_page = document.getElementById("formularios");
-  console.log(main_page.style.display = "block");
 
   if (main_page.style.display == "block" || cart_page == "none") {
     cart_page.style.display = "block";
     main_page.style.display = "none";
-    form_page.style.display = "none"
-  } else if (form_page.style.display == "block"){
+    form_page.style.display = "none";
+  } else if (form_page.style.display == "block") {
     cart_page.style.display = "block";
     main_page.style.display = "none";
-    form_page.style.display = "none"
-  } else if (cart_page.style.display == "block"){
+    form_page.style.display = "none";
+  } else if (cart_page.style.display == "block") {
     cart_page.style.display = "none";
     main_page.style.display = "block";
-    form_page.style.display = "none"
+    form_page.style.display = "none";
   }
   socket.emit("loadFavourites");
 }
 
-
 function showForm() {
-  console.log("vaya")
+  console.log("vaya");
   const cart_page = document.getElementById("carro");
   const main_page = document.getElementById("main_page");
   const form_page = document.getElementById("formularios");
-  console.log(cart_page.style.display = "block");
-  
+  console.log((cart_page.style.display = "block"));
+
   if (main_page.style.display == "block" || form_page == "none") {
     cart_page.style.display = "none";
     main_page.style.display = "none";
-    form_page.style.display = "block"
-  } else if (form_page.style.display == "block"){
+    form_page.style.display = "block";
+  } else if (form_page.style.display == "block") {
     cart_page.style.display = "none";
     main_page.style.display = "block";
-    form_page.style.display = "none"
-  } else if (cart_page.style.display == "block"){
+    form_page.style.display = "none";
+  } else if (cart_page.style.display == "block") {
     cart_page.style.display = "none";
     main_page.style.display = "none";
-    form_page.style.display = "block"
+    form_page.style.display = "block";
   }
 }
 
@@ -69,9 +70,7 @@ socket.on("addProductResult", function (result) {
     showModal(result.message, 1);
     //alert(result.message);
   }
-  setTimeout(function() {
-    console.log('Después de 2 segundos');
-  }, 2000);
+  
 });
 
 socket.on("loadFavouritesResult", (data) => {
@@ -83,7 +82,7 @@ socket.on("productDeleted", (response) => {
 });
 
 // Función para agregar un producto
-function addProduct(event, newProduct) {
+function addProduct(newProduct) {
   event.preventDefault();
   socket.emit("addProduct", newProduct);
 }
@@ -145,15 +144,18 @@ function renderlist(data) {
 
     const category_product = document.createElement("h2");
     category_product.textContent = `${product.categoria}`;
-    productElement.setAttribute('data-categoria', product.categoria.toLowerCase());
+    productElement.setAttribute(
+      "data-categoria",
+      product.categoria.toLowerCase()
+    );
 
     const price_product = document.createElement("p");
     price_product.textContent = `${product.precio}`;
-    productElement.setAttribute('data-precio', product.precio);
+    productElement.setAttribute("data-precio", product.precio);
 
     const button_product = document.createElement("button");
     button_product.onclick = (event) => {
-      addProduct(event, { name: product.nombre, price: product.precio });
+      addProduct({ name: product.nombre, price: product.precio });
     };
 
     button_product.classList.add("but");
@@ -180,17 +182,15 @@ function renderlist(data) {
 }
 
 function load_carrito(data) {
-  event.preventDefault();
-  console.log(data);
   if (data.success == false) {
     showModal(data.message, 1);
     return;
   }
-  if (data.message.length == 0) {
+  data = data.message;
+  if (data.length == 0) {
     showModal("No hay productos en el carrito", 1);
     return;
   }
-  data = data.message;
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
   f_list.textContent = "";
@@ -267,11 +267,9 @@ function actulizarFiltroCategorias() {
   });
 }
 
-setTimeout(function() {
+setTimeout(function () {
   actulizarFiltroCategorias();
 }, 100);
-
-
 
 function filterProducts() {
   var categoriaSelect = document.getElementById("filtro-categoria");
@@ -283,43 +281,43 @@ function filterProducts() {
     var categoria = product.dataset.categoria;
     var precio = parseFloat(product.dataset.precio);
     if (seleccionCategoria === "0" || seleccionCategoria === categoria) {
-      switch(seleccionPrecio){
+      switch (seleccionPrecio) {
         case "0":
-          product.style.display = "block"
+          product.style.display = "block";
           break;
         case "10":
-          if (precio < 10.0){
+          if (precio < 10.0) {
             product.style.display = "block";
           } else {
-            product.style.display = "none"
+            product.style.display = "none";
           }
           break;
         case "30":
-          if (precio >= 10.0 && precio <= 30.0){
+          if (precio >= 10.0 && precio <= 30.0) {
             product.style.display = "block";
           } else {
-            product.style.display = "none"
+            product.style.display = "none";
           }
           break;
         case "100":
-          if (precio >= 30.0 && precio <= 100.0){
+          if (precio >= 30.0 && precio <= 100.0) {
             product.style.display = "block";
           } else {
-            product.style.display = "none"
+            product.style.display = "none";
           }
           break;
         case "200":
-          if (precio >= 100.0 && precio <= 200.0){
+          if (precio >= 100.0 && precio <= 200.0) {
             product.style.display = "block";
           } else {
-            product.style.display = "none"
+            product.style.display = "none";
           }
           break;
         case "-1":
-          if (precio > 200.0){
+          if (precio > 200.0) {
             product.style.display = "block";
           } else {
-            product.style.display = "none"
+            product.style.display = "none";
           }
           break;
       }
@@ -329,7 +327,6 @@ function filterProducts() {
   });
 }
 
-
 document
   .getElementById("filtro-categoria")
   .addEventListener("change", filterProducts);
@@ -338,7 +335,6 @@ document
   .getElementById("filtro-precio")
   .addEventListener("change", filterProducts);
 
-
 // Manejar el envío del formulario de inicio de sesión
 function Submitform() {
   event.preventDefault();
@@ -346,6 +342,7 @@ function Submitform() {
   const password = document.getElementById("password").value.toString();
   document.getElementById("username").value = "";
   document.getElementById("password").value = "";
+  showCart();
   // Enviar los datos de inicio de sesión al servidor a través de sockets
   socket.emit("login", { username, password });
 }
@@ -362,18 +359,10 @@ function Submitformsignup() {
   socket.emit("signup", { username, password });
 }
 
-
-
-
-
-
-
-
 ///////////// RECONOCIMIENTO POR VOZ ///////////////////
-const voiceActivator = document.getElementById('voice_activator');
-const voiceButton = document.getElementById('voiceButton');
-const voiceContainer = document.getElementById('voice'); // Contenedor del reconocimiento por voz
-
+const voiceActivator = document.getElementById("voice_activator");
+const voiceButton = document.getElementById("voiceButton");
+const voiceContainer = document.getElementById("voice"); // Contenedor del reconocimiento por voz
 
 // Función para mostrar el contenedor del reconocimiento por voz
 function showMic() {
@@ -381,52 +370,74 @@ function showMic() {
 }
 
 // Verificar si el navegador admite la Web Speech API
-if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+  const recognition = new (window.SpeechRecognition ||
+    window.webkitSpeechRecognition)();
 
   // Establecer el idioma del reconocimiento de voz
-  recognition.lang = 'es-ES';
+  recognition.lang = "es-ES";
 
   // Configurar el evento de resultado del reconocimiento de voz
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript.trim().toLowerCase();
-    console.log('Texto reconocido:', transcript);
+    console.log("Texto reconocido:", transcript);
+
+    // remove the tildes and accents
+    const transcriptNormalized = transcript
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").trim().replace(/\.$/, '');
+    console.log("Texto reconocido normalizado:", transcriptNormalized);
+    console.log(all_products);
+    let found = false;
+    all_products.forEach((product) => {
+      let aux = product.nombre.toLowerCase().normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").trim();
+      console.log(aux, transcriptNormalized);
+      console.log(aux.includes(transcriptNormalized));
+      if (aux.includes(transcriptNormalized)){
+          addProduct({ name: product.nombre, price: product.precio });
+          found = true;
+          return;
+      }
+    });
+    if (!found){
+      showModal(`No reconocido producto ${transcriptNormalized}`, 1);
+    }
 
     // Aquí puedes procesar el texto reconocido para activar acciones
     // Por ejemplo, buscar productos por su nombre o ejecutar comandos
-    if (transcript === 'seleccionar producto') {
+    if (transcript === "seleccionar producto") {
       // Código para seleccionar un producto
-      console.log('Producto seleccionado');
-    } else if (transcript === 'agregar al carrito') {
+      console.log("Producto seleccionado");
+    } else if (transcript === "agregar al carrito") {
       // Código para agregar un producto al carrito
-      console.log('Producto agregado al carrito');
+      console.log("Producto agregado al carrito");
     }
   };
 
   // Configurar el evento de error del reconocimiento de voz
   recognition.onerror = (event) => {
-    console.error('Error en el reconocimiento de voz:', event.error);
+    console.error("Error en el reconocimiento de voz:", event.error);
   };
 
   // Configurar el evento click del botón de voz
-  voiceButton.addEventListener('click', (event) => {
+  voiceContainer.addEventListener("click", (event) => {
     event.stopPropagation(); // Detener la propagación del clic para evitar que se cierre al hacer clic en el botón
     // Iniciar el reconocimiento de voz cuando se hace clic en el botón
     recognition.start();
-    console.log('Reconocimiento de voz iniciado');
+    console.log("Reconocimiento de voz iniciado");
   });
 
   // Event listener para cerrar la opción de reconocimiento por voz al hacer clic fuera del círculo o en el botón de voz
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     if (event.target !== voiceActivator) {
       voiceContainer.style.display = "none"; // Ocultar el contenedor del reconocimiento por voz
       recognition.abort(); // Detener el reconocimiento de voz
-      console.log('Reconocimiento de voz detenido');
+      console.log("Reconocimiento de voz detenido");
     }
   });
 } else {
   // El navegador no admite la Web Speech API
-  console.error('El navegador no admite la Web Speech API');
+  console.error("El navegador no admite la Web Speech API");
   voiceButton.disabled = true;
 }
-

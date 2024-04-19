@@ -7,6 +7,14 @@
     {
       "name": "Camiseta de algodón",
       "price": 15.99
+    },
+    {
+      "name": "Collar de perlas",
+      "price": 49.99
+    },
+    {
+      "name": "Tableta",
+      "price": 299.99
     }
   ]
 }
