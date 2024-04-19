@@ -1,7 +1,10 @@
 // En el archivo JavaScript del cliente
 const socket = io("http://localhost:3000");
 
+var all_products = [];
+
 socket.on("products", (data) => {
+  all_products = data;
   console.log("Productos recibidos");
   renderlist(data);
 });
@@ -67,9 +70,7 @@ socket.on("addProductResult", function (result) {
     showModal(result.message, 1);
     //alert(result.message);
   }
-  setTimeout(function () {
-    console.log("Después de 2 segundos");
-  }, 2000);
+  
 });
 
 socket.on("loadFavouritesResult", (data) => {
@@ -372,46 +373,23 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     // remove the tildes and accents
     const transcriptNormalized = transcript
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+      .replace(/[\u0300-\u036f]/g, "").trim().replace(/\.$/, '');
     console.log("Texto reconocido normalizado:", transcriptNormalized);
-
-    if (transcriptNormalized.includes("camiseta")) {
-      addProduct({ name: "Camiseta de algodón", price: 15.99 });
-    } else if (transcriptNormalized.includes("anillo")) {
-      addProduct({ name: "Anillo de plata", price: 29.99 });
-    } else if (transcriptNormalized.includes("telefono")) {
-      addProduct({ name: "Teléfono móvil", price: 399.99 });
-    } else if (transcriptNormalized.includes("portatil")) {
-      addProduct({ name: "Portátil", price: 899.99 });
-    } else if (transcriptNormalized.includes("zapados")) {
-      addProduct({ name: "Zapatos deportivos", price: 59.99 });
-    } else if (
-      transcriptNormalized.includes("collar") ||
-      transcriptNormalized.includes("perlas")
-    ) {
-      addProduct({ name: "Collar de perlas", price: 49.99 });
-    } else if (
-      transcriptNormalized.includes("tableta") ||
-      transcriptNormalized.includes("tablet")
-    ) {
-      addProduct({ name: "Tableta", price: 299.99 });
-    } else if (transcriptNormalized.includes("camara")) {
-      addProduct({ name: "Cámara DSLR", price: 799.99 });
-    } else if (
-      transcriptNormalized.includes("vaqueros") ||
-      transcriptNormalized.includes("pantalones")
-    ) {
-      addProduct({ name: "Pantalones vaqueros", price: 39.99 });
-    } else if (transcriptNormalized.includes("reloj")) {
-      addProduct({ name: "Reloj de pulsera", price: 79.99 });
-    } else if (transcriptNormalized.includes("altavoz")) {
-      addProduct({ name: "Altavoz Bluetooth", price: 49.99 });
-    } else if (
-      transcriptNormalized.includes("smartwatch") ||
-      transcriptNormalized.includes("smart") ||
-      transcriptNormalized.includes("watch")
-    ) {
-      addProduct({ name: "Smartwatch", price: 129.99 });
+    console.log(all_products);
+    let found = false;
+    all_products.forEach((product) => {
+      let aux = product.nombre.toLowerCase().normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").trim();
+      console.log(aux, transcriptNormalized);
+      console.log(aux.includes(transcriptNormalized));
+      if (aux.includes(transcriptNormalized)){
+          addProduct({ name: product.nombre, price: product.precio });
+          found = true;
+          return;
+      }
+    });
+    if (!found){
+      showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
 
     // Aquí puedes procesar el texto reconocido para activar acciones
@@ -431,7 +409,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   };
 
   // Configurar el evento click del botón de voz
-  voiceButton.addEventListener("click", (event) => {
+  voiceContainer.addEventListener("click", (event) => {
     event.stopPropagation(); // Detener la propagación del clic para evitar que se cierre al hacer clic en el botón
     // Iniciar el reconocimiento de voz cuando se hace clic en el botón
     recognition.start();

@@ -11,6 +11,10 @@
     {
       "name": "Collar de perlas",
       "price": 49.99
+    },
+    {
+      "name": "Tableta",
+      "price": 299.99
     }
   ]
 }
