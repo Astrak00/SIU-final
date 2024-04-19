@@ -135,8 +135,11 @@ io.on("connection", (socket) => {
       if (favourite_products[current_user] == null) {
         favourite_products[current_user] = [];
       }
-      if (favourite_products[current_user].find(
-          (product) => product.name === newProduct.name)) {
+      if (
+        favourite_products[current_user].find(
+          (product) => product.name === newProduct.name
+        )
+      ) {
         socket.emit("addProductResult", {
           success: true,
           message: "Producto ya está en la lista",
@@ -260,8 +263,8 @@ io.on("connection", (socket) => {
     active_users.find((user) => user.id === socket.id).username = username;
     console.log(active_users);
     socket.emit("signupResult", {
-          success: true,
-          message: "Cuenta creada con exito",
+      success: true,
+      message: "Cuenta creada con exito",
     });
   });
 
@@ -281,7 +284,7 @@ io.on("connection", (socket) => {
         });
         return;
       }
-      if (favourite_products[current_user] == null){
+      if (favourite_products[current_user] == null) {
         favourite_products[current_user] = [];
       }
 
@@ -290,6 +293,21 @@ io.on("connection", (socket) => {
         message: favourite_products[current_user],
       });
     }
+  });
+  /////// ADMIN ///////
+  socket.on("newProduct", (jsonData) => {
+    console.log("Nuevo producto recibido:", jsonData);
+    const newProduct = JSON.parse(jsonData);
+    products.push(newProduct);
+    fs.writeFile(productsFilePath, JSON.stringify(products, null, 2), (err) => {
+      if (err) {
+        console.error("Error al guardar el producto:", err);
+        socket.emit("productAdded", { success: false });
+      } else {
+        console.log("Producto guardado correctamente.");
+        socket.emit("productAdded", { success: true });
+      }
+    });
   });
 });
 

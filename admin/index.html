@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda Online</title>
-    <link rel="stylesheet" href="../www/style.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   </head>
   <body>
@@ -13,24 +13,26 @@
     </header>
     <section id="main_page">
       <div id="añadir">
-      <button onclick="mostrarCuestionario()">Añadir producto</button>
-    </div>
+        <button id="anadir-btn" onclick="mostrarCuestionario()">
+          Añadir producto
+        </button>
+      </div>
       <form id="añadir_producto" onsubmit="enviarRespuestas(event)">
         <div>
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="nombre" required>
+          <input type="text" id="nombre" name="nombre" required />
         </div>
         <div>
           <label for="precio">Precio:</label>
-          <input type="number" id="precio" name="precio" required>
+          <input type="number" id="precio" name="precio" required />
         </div>
         <div>
           <label for="src">Cantidad:</label>
-          <input type="number" id="catidad" name="cantidad" required>
+          <input type="number" id="cantidad" name="cantidad" required />
         </div>
         <div>
           <label for="src">Enlace:</label>
-          <input type="url" id="enlace" name="enlace" required>
+          <input type="url" id="enlace" name="enlace" required />
         </div>
         <div>
           <label for="categoria">Categoría:</label>
@@ -45,22 +47,17 @@
           <label for="descripcion">Descripción:</label>
           <textarea id="descripcion" name="descripcion" required></textarea>
         </div>
-        <button type="submit">Enviar</button>
+        <button onclick="enviarRespuestas(event)">Enviar</button>
         <button class="boton" onclick="ocultarCuestionario()">Cerrar</button>
       </form>
-        
-
-      </section>
-
 
       <div id="products">
         <!-- Productos -->
       </div>
     </section>
-    <a id="cartLink" onclick="displayCart()">
-      <img src="../www/images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+    <a id="cartLink" onclick="showCart()">
+      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
     </a>
-
 
     <div id="error-modal" class="modal">
       <div id="modal-content">
@@ -68,7 +65,6 @@
         <p id="error-message"></p>
       </div>
     </div>
-    <script src="../www/script.js"></script>
-    <script src="../server.js"></script>
+    <script src="admin.js"></script>
   </body>
 </html>

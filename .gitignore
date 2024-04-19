@@ -1,0 +1,6 @@
+produts.json
+favourite_products.json
+.idea
+node_modules
+package-lock.json
+.DS_Store
