@@ -4,7 +4,7 @@ const socket = io("http://localhost:3000");
 var all_products = [];
 var fav_products = [];
 
-const comandos_viajar_carro = ["carrito", "carro", "favoritos", "guardados", "cesta", "volver"];
+const comandos_viajar_carro = ["carrito", "carro", "favoritos", "guardados", "cesta", "volver", "pagina principal"];
 const comandos_sesion = ["login", "log in", "sign up", "sesion", "signup", "china", "iniciar sesion", "suscribirse", "crear cuenta", "acceso", "inicio de sesion"];
 
 socket.on("products", (data) => {
@@ -102,8 +102,7 @@ function addProduct(newProduct) {
 }
 
 // Función para eliminar un producto
-function deleteProduct(event, productId) {
-  event.preventDefault();
+function deleteProduct(productId) {
   socket.emit("deleteProduct", productId);
 }
 
@@ -229,7 +228,7 @@ function load_carrito(data) {
     delete_button.style.width = "20px";
     delete_button.style.height = "20px";
     delete_button.onclick = (event) => {
-      deleteProduct(event, product.name);
+      deleteProduct(product.name);
     };
 
     // Agregar los elementos span al elemento de contacto
@@ -429,7 +428,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
           //console.log(aux, transcriptNormalized);
           //console.log(aux.includes(transcriptNormalized));
           if (aux.includes(transcriptNormalized)){
-              addProduct({ name: product.nombre, price: product.precio });
+              deleteProduct(product.nombre);
               found = true;
               return false;
           }
@@ -440,7 +439,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       voiceContainer.style.display = "none";
     }
     if (comandos_viajar_carro.includes(transcriptNormalized)){
-      if (transcriptNormalized == "volver"){
+      if (transcriptNormalized == "volver" || transcriptNormalized == "pagina principal"){
         displayMain();
       }
       else{
@@ -504,7 +503,7 @@ window.addEventListener('deviceorientation', (event) => {
   const gamma = event.gamma; 
   if (cart_page.style.display == "block" && !actionExecuted) {
     // Cambiar de producto si se inclina
-    if (beta < 15) {
+    if (beta < 5) {
       console.log("Next");
       nextProduct();
       actionExecuted = true;
@@ -519,7 +518,7 @@ window.addEventListener('deviceorientation', (event) => {
       const confirmation = window.confirm("¿Estás seguro de que quieres borrar este producto?");
       console.log(fav_products[currentIndex]);
       if (confirmation) {
-        deleteProduct(event, fav_products[currentIndex].name);
+        deleteProduct(fav_products[currentIndex].name);
         actionExecuted = true;
         setTimeout(() => {
           actionExecuted = false;
