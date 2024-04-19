@@ -194,7 +194,7 @@ header {
 }
 
 #cartItems li {
-  margin-bottom: 5px;
+  margin-bottom: 5px
 }
 
 #totalPrice {
@@ -313,4 +313,24 @@ header {
   cursor: pointer;
   width: 120%; 
   height: auto;
+}
+
+#añadir_producto{
+  display: none;
+  justify-content: center;
+  text-align: center;
+}
+#añadir{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  text-align: center;
+}
+label {
+  display: inline-block;
+  padding: 5px 10px; /* Agregar espacio alrededor del texto */
+  background-color: #f0f0f0; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde delgado */
+  border-radius: 5px; /* Esquinas redondeadas */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  font-weight: bold; /* Texto en negrita */
 }
