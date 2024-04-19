@@ -292,27 +292,28 @@ header {
 
 #voice {
   display: none;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
+  justify-content: center; 
+  align-items: center; 
   position: fixed;
   z-index: 5;
   left: 0;
   right: 0;
-  bottom: 20px; /* Cambiado de 2 a 20px */
+  bottom: 20px; 
   top: 0;
-  border-radius: 50%; /* Cambiado de 80% a 50% para un círculo perfecto */
+  border-radius: 50%; 
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
   height: 25%;
+  transition: background-color 0.3s ease;
 }
 
 #voiceButton {
   cursor: pointer;
-  width: 120%; 
-  height: auto;
+  width: 70%; 
+  height: 90%;
 }
 
 #añadir_producto{

@@ -434,6 +434,14 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
           }
         }
       });
+      if (transcriptNormalized.includes("siguiente")){
+        nextProduct();
+        found = true;
+      }
+      else if (transcriptNormalized.includes("borrar")){
+        deleteProduct(fav_products[currentIndex].name);
+        found = true;
+      }
     }
     else{
       voiceContainer.style.display = "none";
@@ -447,6 +455,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       }
       found = true;
     }
+    
     if (comandos_sesion.includes(transcriptNormalized)){
       displayForm();
       found = true;
@@ -454,16 +463,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (!found){
       showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
-
-    // Aquí puedes procesar el texto reconocido para activar acciones
-    // Por ejemplo, buscar productos por su nombre o ejecutar comandos
-    if (transcript === "seleccionar producto") {
-      // Código para seleccionar un producto
-      console.log("Producto seleccionado");
-    } else if (transcript === "agregar al carrito") {
-      // Código para agregar un producto al carrito
-      console.log("Producto agregado al carrito");
-    }
+    voiceContainer.style.backgroundColor = "white";
   };
 
   // Configurar el evento de error del reconocimiento de voz
@@ -476,6 +476,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     event.stopPropagation(); // Detener la propagación del clic para evitar que se cierre al hacer clic en el botón
     // Iniciar el reconocimiento de voz cuando se hace clic en el botón
     recognition.start();
+    voiceContainer.style.backgroundColor = "#ff6666";
     console.log("Reconocimiento de voz iniciado");
   });
 
@@ -484,6 +485,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (event.target !== voiceActivator) {
       voiceContainer.style.display = "none"; // Ocultar el contenedor del reconocimiento por voz
       recognition.abort(); // Detener el reconocimiento de voz
+      voiceContainer.style.backgroundColor = "white";
       //console.log("Reconocimiento de voz detenido");
     }
   });
