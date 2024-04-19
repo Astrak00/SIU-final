@@ -19,7 +19,6 @@ function showCart() {
   const cart_page = document.getElementById("carro");
   const main_page = document.getElementById("main_page");
   const form_page = document.getElementById("formularios");
-  console.log((main_page.style.display = "block"));
 
   if (main_page.style.display == "block" || cart_page == "none") {
     cart_page.style.display = "block";
@@ -182,17 +181,15 @@ function renderlist(data) {
 }
 
 function load_carrito(data) {
-  event.preventDefault();
-  console.log(data);
   if (data.success == false) {
     showModal(data.message, 1);
     return;
   }
-  if (data.message.length == 0) {
+  data = data.message;
+  if (data.length == 0) {
     showModal("No hay productos en el carrito", 1);
     return;
   }
-  data = data.message;
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
   f_list.textContent = "";
@@ -377,14 +374,43 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       .replace(/[\u0300-\u036f]/g, "");
     console.log("Texto reconocido normalizado:", transcriptNormalized);
 
-    if ("camiseta" in transcriptNormalized) {
+    if (transcriptNormalized.includes("camiseta")) {
       addProduct({ name: "Camiseta de algodón", price: 15.99 });
-    } else if ("anillo") {
+    } else if (transcriptNormalized.includes("anillo")) {
       addProduct({ name: "Anillo de plata", price: 29.99 });
-    } else if ("telefono" in transcriptNormalized) {
+    } else if (transcriptNormalized.includes("telefono")) {
       addProduct({ name: "Teléfono móvil", price: 399.99 });
-    } else if ("portatil" in transcriptNormalized) {
+    } else if (transcriptNormalized.includes("portatil")) {
       addProduct({ name: "Portátil", price: 899.99 });
+    } else if (transcriptNormalized.includes("zapados")) {
+      addProduct({ name: "Zapatos deportivos", price: 59.99 });
+    } else if (
+      transcriptNormalized.includes("collar") ||
+      transcriptNormalized.includes("perlas")
+    ) {
+      addProduct({ name: "Collar de perlas", price: 49.99 });
+    } else if (
+      transcriptNormalized.includes("tableta") ||
+      transcriptNormalized.includes("tablet")
+    ) {
+      addProduct({ name: "Tableta", price: 299.99 });
+    } else if (transcriptNormalized.includes("camara")) {
+      addProduct({ name: "Cámara DSLR", price: 799.99 });
+    } else if (
+      transcriptNormalized.includes("vaqueros") ||
+      transcriptNormalized.includes("pantalones")
+    ) {
+      addProduct({ name: "Pantalones vaqueros", price: 39.99 });
+    } else if (transcriptNormalized.includes("reloj")) {
+      addProduct({ name: "Reloj de pulsera", price: 79.99 });
+    } else if (transcriptNormalized.includes("altavoz")) {
+      addProduct({ name: "Altavoz Bluetooth", price: 49.99 });
+    } else if (
+      transcriptNormalized.includes("smartwatch") ||
+      transcriptNormalized.includes("smart") ||
+      transcriptNormalized.includes("watch")
+    ) {
+      addProduct({ name: "Smartwatch", price: 129.99 });
     }
 
     // Aquí puedes procesar el texto reconocido para activar acciones
