@@ -2,15 +2,6 @@
 
 const socket = io("http://localhost:3000");
 
-function mostrarCuestionario() {
-  var formulario = document.getElementById("añadir_producto");
-  formulario.style.display = "block"; // Mostrar el formulario cuando se hace clic en el botón
-}
-
-function ocultarCuestionario() {
-  var formulario = document.getElementById("añadir_producto");
-  formulario.style.display = "none"; // Mostrar el formulario cuando se hace clic en el botón
-}
 
 function sendResponse(jsonData) {
   socket.emit("newProduct", jsonData);

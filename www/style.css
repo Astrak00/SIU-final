@@ -3,46 +3,58 @@ body {
   margin: 0;
   padding: 0;
 }
-
 header {
   height: 15%;
   display: flex;
-  position: fixed;
   background-color: #4d64ca;
   color: #fff;
   width: 100%;
+
   flex-direction: row;
   align-items: center;
-  text-align: center;
-  left: 0;
+  justify-content: center;
+  position: fixed;
   top: 0;
+  z-index: 1000;
 }
+
+main {
+  margin-top: 12%;
+}
+
 .box {
-  width: 20%;
+  flex:1;
 }
 
 #Login_Icon {
+  margin-left: 15%;
   width: 50px;
   height: auto;
+  cursor: pointer;
+}
+
+#title {
+  text-align: center;
   cursor: pointer;
 }
 #cartIcon {
+  margin-right: 15%;
   width: 50px;
   height: auto;
   cursor: pointer;
-  margin-left: auto;
 }
 
 #voice_activator {
+  position: fixed;
+  top: 40px;
+  right: 20%;
+  z-index: 1001;
   width: 30px;
   height: 30px;
   cursor: pointer;
 }
-#main_page {
-  display: block;
-  height: 85%;
-  margin-top: 15%;
-}
+
+
 .container-filtro {
   text-align: center;
   margin-bottom: 40px;
@@ -76,7 +88,6 @@ header {
   max-width: 100px;
 }
 #cart {
-  margin-top: 15%;
   background-color: #f4f4f4;
   border: 1px solid #ccc;
   padding: 10px;
@@ -106,8 +117,8 @@ header {
   display: none;
   position: fixed;
   z-index: 1;
-  left: 0;
-  top: 0;
+  left: 1;
+  top: 1;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -160,7 +171,7 @@ header {
 }
 
 #carro {
-  margin-top: 15%;
+  text-align: center;
   display: none;
 }
 
@@ -196,18 +207,13 @@ header {
 }
 
 #formularios {
-  margin-top: 15%;
   display: none;
 }
 
 #Login_Icon {
-  margin: 20px;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 50px; /* Tamaño de la imagen */
+  width: 50px; 
   height: auto;
-  cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
+  cursor: pointer; 
 }
 
 #contenedor-formularios {
@@ -226,7 +232,6 @@ header {
 }
 
 #loginFormContainer h1 {
-  margin-top: 10%;
   font-size: 4vh;
 }
 
@@ -259,7 +264,6 @@ header {
 }
 
 #signUpFormContainer h1 {
-  margin-top: 10%;
   font-size: 4vh;
 }
 

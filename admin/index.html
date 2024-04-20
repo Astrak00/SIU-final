@@ -8,16 +8,13 @@
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   </head>
   <body>
-    <header>
-      <h1>Tienda Online</h1>
-    </header>
     <section id="main_page">
-      <div id="añadir">
-        <button id="anadir-btn" onclick="mostrarCuestionario()">
-          Añadir producto
-        </button>
-      </div>
+      <header>
+        <h1 id ="title">Tienda Online</h1>
+      </header>
+
       <form id="añadir_producto" onsubmit="enviarRespuestas(event)">
+        <h2> Añadir producto</h2>
         <div>
           <label for="nombre">Nombre:</label>
           <input type="text" id="nombre" name="nombre" required />
@@ -55,10 +52,7 @@
         <!-- Productos -->
       </div>
     </section>
-    <a id="cartLink" onclick="showCart()">
-      <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
-    </a>
-
+    
     <div id="error-modal" class="modal">
       <div id="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>

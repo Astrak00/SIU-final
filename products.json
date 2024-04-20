@@ -1,99 +1,106 @@
 [
-    {
-      "nombre": "Camiseta de algodón",
-      "precio": 15.99,
-      "cantidad": 50,
-      "categoria": "Ropa",
-      "descripcion": "Camiseta básica de algodón para uso diario.",
-      "imagen": "https://eventos-alssport.es/1828-home_default/camiseta-algodon-adulto-130gr.jpg"
-    },
-    {
-      "nombre": "Anillo de plata",
-      "precio": 29.99,
-      "cantidad": 20,
-      "categoria": "Accesorios",
-      "descripcion": "Anillo de plata esterlina con diseño minimalista.",
-      "imagen": "https://imgproxy.mijoyaideal.es/nCvzxTVZj_F22-eKb2xVR_CzLAUjk9fq-BMVIH-S708/resize:fit::/aHR0cHM6Ly93d3cubWlqb3lhaWRlYWwuZXMvbWVkaWEvY2F0YWxvZy9wcm9kdWN0LzEvMC8xMDAzXzIuanBnP3N0b3JlPWVzJmltYWdlLXR5cGU9aW1hZ2U.jpg"
-    },
-    {
-      "nombre": "Teléfono inteligente",
-      "precio": 399.99,
-      "cantidad": 10,
-      "categoria": "Electrónica",
-      "descripcion": "Teléfono inteligente con pantalla de alta resolución y cámara de alta calidad.",
-      "imagen": "https://cf5.certideal.com/20636-thickbox_default/iphone-7-plus-128-gb-negro.jpg"
-    },
-    {
-      "nombre": "Portátil",
-      "precio": 899.99,
-      "cantidad": 5,
-      "categoria": "Electrónica",
-      "descripcion": "Portátil ligero y potente para trabajar en cualquier lugar.",
-      "imagen": "https://m.media-amazon.com/images/I/71ZV55PMJ2L._AC_UF894,1000_QL80_.jpg"
-    },
-    {
-        "nombre": "Zapatos deportivos",
-        "precio": 59.99,
-        "cantidad": 30,
-        "categoria": "Ropa",
-        "descripcion": "Zapatos deportivos con suela de goma antideslizante y diseño moderno.",
-        "imagen": "https://www.marsana.es/wp-content/uploads/2022/05/zapatos-deportivos-967cux-1.jpg"
-      },
-      {
-        "nombre": "Collar de perlas",
-        "precio": 49.99,
-        "cantidad": 15,
-        "categoria": "Accesorios",
-        "descripcion": "Collar elegante de perlas cultivadas con cierre de plata.",
-        "imagen": "https://x3madrid.com/wp-content/uploads/collar-perlabarroca-plata-x3.jpg"
-      },
-      {
-        "nombre": "Tableta",
-        "precio": 299.99,
-        "cantidad": 8,
-        "categoria": "Electrónica",
-        "descripcion": "Tableta con pantalla de alta definición y batería de larga duración.",
-        "imagen": "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202310/24/00115217116928____2__640x640.jpg"
-      },
-      {
-        "nombre": "Cámara DSLR",
-        "precio": 799.99,
-        "cantidad": 12,
-        "categoria": "Electrónica",
-        "descripcion": "Cámara réflex digital con sensor de alta resolución y múltiples modos de disparo.",
-        "imagen": "https://i1.adis.ws/i/canon/eos_7d_mark_ii-ef-s15-85is-frt_f2f0e589d34f416c9bd6e4d15ca2080a"
-      },
-      {
-        "nombre": "Pantalones vaqueros",
-        "precio": 39.99,
-        "cantidad": 25,
-        "categoria": "Ropa",
-        "descripcion": "Pantalones vaqueros de corte clásico y tela resistente.",
-        "imagen": "https://es.dockers.com/cdn/shop/files/39b44014c8c67b6e995656334a68033ac2832e9e_900x1125_crop_center.jpg?v=1708991689"
-      },
-      {
-        "nombre": "Reloj de pulsera",
-        "precio": 79.99,
-        "cantidad": 18,
-        "categoria": "Accesorios",
-        "descripcion": "Reloj de pulsera analógico con correa de cuero y movimiento suizo.",
-        "imagen": "https://www.duranjoyeros.com/wp-content/uploads/2024/02/Reloj-Omega-Seamaster-12.jpg"
-      },
-      {
-        "nombre": "Altavoz Bluetooth",
-        "precio": 49.99,
-        "cantidad": 20,
-        "categoria": "Electrónica",
-        "descripcion": "Altavoz portátil con conectividad Bluetooth y sonido de alta calidad.",
-        "imagen": "https://www.ultimateears.com/content/dam/ue/en/navigation/navigation-boom3.png"
-      },
-      {
-        "nombre": "Smartwatch",
-        "precio": 129.99,
-        "cantidad": 15,
-        "categoria": "Electrónica",
-        "descripcion": "Smartwatch con pantalla táctil a color y seguimiento de actividad física.",
-        "imagen": "https://m.media-amazon.com/images/I/61ksrJ2LsgL._AC_UF894,1000_QL80_.jpg"
-      }
-  ]
-  
+  {
+    "nombre": "Camiseta de algodón",
+    "precio": 15.99,
+    "cantidad": 50,
+    "categoria": "Ropa",
+    "descripcion": "Camiseta básica de algodón para uso diario.",
+    "imagen": "https://eventos-alssport.es/1828-home_default/camiseta-algodon-adulto-130gr.jpg"
+  },
+  {
+    "nombre": "Anillo de plata",
+    "precio": 29.99,
+    "cantidad": 20,
+    "categoria": "Accesorios",
+    "descripcion": "Anillo de plata esterlina con diseño minimalista.",
+    "imagen": "https://imgproxy.mijoyaideal.es/nCvzxTVZj_F22-eKb2xVR_CzLAUjk9fq-BMVIH-S708/resize:fit::/aHR0cHM6Ly93d3cubWlqb3lhaWRlYWwuZXMvbWVkaWEvY2F0YWxvZy9wcm9kdWN0LzEvMC8xMDAzXzIuanBnP3N0b3JlPWVzJmltYWdlLXR5cGU9aW1hZ2U.jpg"
+  },
+  {
+    "nombre": "Teléfono inteligente",
+    "precio": 399.99,
+    "cantidad": 10,
+    "categoria": "Electrónica",
+    "descripcion": "Teléfono inteligente con pantalla de alta resolución y cámara de alta calidad.",
+    "imagen": "https://cf5.certideal.com/20636-thickbox_default/iphone-7-plus-128-gb-negro.jpg"
+  },
+  {
+    "nombre": "Portátil",
+    "precio": 899.99,
+    "cantidad": 5,
+    "categoria": "Electrónica",
+    "descripcion": "Portátil ligero y potente para trabajar en cualquier lugar.",
+    "imagen": "https://m.media-amazon.com/images/I/71ZV55PMJ2L._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "nombre": "Zapatos deportivos",
+    "precio": 59.99,
+    "cantidad": 30,
+    "categoria": "Ropa",
+    "descripcion": "Zapatos deportivos con suela de goma antideslizante y diseño moderno.",
+    "imagen": "https://www.marsana.es/wp-content/uploads/2022/05/zapatos-deportivos-967cux-1.jpg"
+  },
+  {
+    "nombre": "Collar de perlas",
+    "precio": 49.99,
+    "cantidad": 15,
+    "categoria": "Accesorios",
+    "descripcion": "Collar elegante de perlas cultivadas con cierre de plata.",
+    "imagen": "https://x3madrid.com/wp-content/uploads/collar-perlabarroca-plata-x3.jpg"
+  },
+  {
+    "nombre": "Tableta",
+    "precio": 299.99,
+    "cantidad": 8,
+    "categoria": "Electrónica",
+    "descripcion": "Tableta con pantalla de alta definición y batería de larga duración.",
+    "imagen": "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202310/24/00115217116928____2__640x640.jpg"
+  },
+  {
+    "nombre": "Cámara DSLR",
+    "precio": 799.99,
+    "cantidad": 12,
+    "categoria": "Electrónica",
+    "descripcion": "Cámara réflex digital con sensor de alta resolución y múltiples modos de disparo.",
+    "imagen": "https://i1.adis.ws/i/canon/eos_7d_mark_ii-ef-s15-85is-frt_f2f0e589d34f416c9bd6e4d15ca2080a"
+  },
+  {
+    "nombre": "Pantalones vaqueros",
+    "precio": 39.99,
+    "cantidad": 25,
+    "categoria": "Ropa",
+    "descripcion": "Pantalones vaqueros de corte clásico y tela resistente.",
+    "imagen": "https://es.dockers.com/cdn/shop/files/39b44014c8c67b6e995656334a68033ac2832e9e_900x1125_crop_center.jpg?v=1708991689"
+  },
+  {
+    "nombre": "Reloj de pulsera",
+    "precio": 79.99,
+    "cantidad": 18,
+    "categoria": "Accesorios",
+    "descripcion": "Reloj de pulsera analógico con correa de cuero y movimiento suizo.",
+    "imagen": "https://www.duranjoyeros.com/wp-content/uploads/2024/02/Reloj-Omega-Seamaster-12.jpg"
+  },
+  {
+    "nombre": "Altavoz Bluetooth",
+    "precio": 49.99,
+    "cantidad": 20,
+    "categoria": "Electrónica",
+    "descripcion": "Altavoz portátil con conectividad Bluetooth y sonido de alta calidad.",
+    "imagen": "https://www.ultimateears.com/content/dam/ue/en/navigation/navigation-boom3.png"
+  },
+  {
+    "nombre": "Smartwatch",
+    "precio": 129.99,
+    "cantidad": 15,
+    "categoria": "Electrónica",
+    "descripcion": "Smartwatch con pantalla táctil a color y seguimiento de actividad física.",
+    "imagen": "https://m.media-amazon.com/images/I/61ksrJ2LsgL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "nombre": "",
+    "precio": "",
+    "imagen": "",
+    "cantidad": "",
+    "categoria": "",
+    "descripcion": ""
+  }
+]
