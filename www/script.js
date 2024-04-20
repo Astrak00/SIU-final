@@ -4,37 +4,9 @@ const socket = io("http://localhost:3000");
 var all_products = [];
 var fav_products = [];
 
-const comandos_viajar_carro = [
-  "carrito",
-  "carro",
-  "favoritos",
-  "guardados",
-  "cesta",
-  "volver",
-  "pagina principal",
-];
-const comandos_sesion = [
-  "login",
-  "log in",
-  "sign up",
-  "sesion",
-  "signup",
-  "china",
-  "iniciar sesion",
-  "suscribirse",
-  "crear cuenta",
-  "acceso",
-  "inicio de sesion",
-];
-const comandos_lectura = [
-  "dictar",
-  "leer",
-  "enumerar",
-  "lista",
-  "productos",
-  "enumerar lista",
-  "enumerar lista de productos",
-];
+const comandos_viajar_carro = ["carrito", "carro", "favoritos", "guardados", "cesta", "volver", "pagina principal"];
+const comandos_sesion = ["login", "log in", "sign up", "sesion", "signup", "china", "iniciar sesion", "suscribirse", "crear cuenta", "acceso", "inicio de sesion"];
+const comandos_lectura = ["dictar", "leer", "enumerar", "lista", "productos", "enumerar lista", "enumerar lista de productos"]
 socket.on("products", (data) => {
   all_products = data;
   console.log("Productos recibidos");
@@ -64,7 +36,7 @@ const cart_page = document.getElementById("carro");
 const main_page = document.getElementById("main_page");
 const form_page = document.getElementById("formularios");
 
-function displayCart() {
+function displayCart(){
   cart_page.style.display = "block";
   main_page.style.display = "none";
   form_page.style.display = "none";
@@ -77,7 +49,7 @@ function displayForm() {
   form_page.style.display = "block";
 }
 
-function displayMain() {
+function displayMain(){
   cart_page.style.display = "none";
   main_page.style.display = "block";
   form_page.style.display = "none";
@@ -92,6 +64,7 @@ socket.on("addProductResult", function (result) {
     showModal(result.message, 1);
     //alert(result.message);
   }
+  
 });
 
 socket.on("loadFavouritesResult", (data) => {
@@ -230,6 +203,7 @@ function nextProduct() {
   load_carrito(fav_products);
 }
 
+
 function load_carrito(data) {
   const f_list = document.getElementById("cart-items");
   const total = document.getElementById("totalAmount");
@@ -258,8 +232,8 @@ function load_carrito(data) {
     };
     // Añadir evento tactil para cambiar manualmente el seleccionado
     productElement.addEventListener("click", () => {
-      currentIndex = index;
-      load_carrito(fav_products);
+      currentIndex = index; 
+      load_carrito(fav_products); 
     });
 
     // Agregar los elementos span al elemento de contacto
@@ -278,6 +252,7 @@ function load_carrito(data) {
   });
   total.textContent = amount;
 }
+
 
 function actulizarFiltroCategorias() {
   var categoriaSelect = document.getElementById("filtro-categoria");
@@ -393,17 +368,12 @@ function Submitformsignup() {
   document.getElementById("username_signup").value = "";
   document.getElementById("password_signup").value = "";
   document.getElementById("password2").value = "";
-  if (verify !== password) {
-    showModal("Contraseñas no coinciden", 1);
+  if (verify !== password){
+    showModal("Contraseñas no coinciden",1);
   }
 
-  if (
-    username.trim() == "" ||
-    username == null ||
-    password == null ||
-    password.trim() == ""
-  ) {
-    showModal("No se permiten campos vacíos", 1);
+  if (username.trim() == "" || username == null || password == null || password.trim() == ""){
+    showModal("No se permiten campos vacíos",1);
     return;
   }
   // Enviar los datos de inicio de sesión al servidor a través de sockets
@@ -414,7 +384,7 @@ function Submitformsignup() {
 const voiceActivator = document.getElementById("voice_activator");
 const voiceButton = document.getElementById("voiceButton");
 const voiceContainer = document.getElementById("voice"); // Contenedor del reconocimiento por voz
-
+let recording = false;
 // Función para mostrar el contenedor del reconocimiento por voz
 function showMic() {
   voiceContainer.style.display = "flex";
@@ -436,102 +406,123 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     // remove the tildes and accents
     const transcriptNormalized = transcript
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\.$/, "");
+      .replace(/[\u0300-\u036f]/g, "").replace(/\.$/, '');
     console.log("Texto reconocido normalizado:", transcriptNormalized);
-
+    
     let found = false;
 
-    if (comandos_viajar_carro.includes(transcriptNormalized)) {
-      if (
-        transcriptNormalized == "volver" ||
-        transcriptNormalized == "pagina principal"
-      ) {
+    if (comandos_viajar_carro.includes(transcriptNormalized)){
+      if (transcriptNormalized == "volver" || transcriptNormalized == "pagina principal"){
         displayMain();
-      } else {
+      }
+      else{
         displayCart();
       }
       found = true;
-    } else if (comandos_sesion.includes(transcriptNormalized)) {
+    }
+    
+    else if (comandos_sesion.includes(transcriptNormalized)){
       displayForm();
       found = true;
-    } else if (comandos_lectura.includes(transcriptNormalized)) {
+    }
+    else if (comandos_lectura.includes(transcriptNormalized)){
       speakProductList();
       found = true;
-    } else {
-      if (main_page.style.display == "block" || main_page.style.display == "") {
+    }
+    else{
+
+      if (main_page.style.display == "block" || main_page.style.display == ""){
         all_products.forEach((product) => {
-          if (!found) {
-            let aux = product.nombre
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .trim();
+          if (!found){
+            let aux = product.nombre.toLowerCase().normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "").trim();
             //console.log(aux, transcriptNormalized);
             //console.log(aux.includes(transcriptNormalized));
-            if (aux.includes(transcriptNormalized)) {
-              addProduct({ name: product.nombre, price: product.precio });
-              found = true;
-              return false;
+            if (aux.includes(transcriptNormalized)){
+                addProduct({ name: product.nombre, price: product.precio });
+                found = true;
+                return false;
             }
           }
         });
-      } else if (cart_page.style.display == "block") {
+      }
+      else if (cart_page.style.display == "block"){
         all_products.forEach((product) => {
-          if (!found) {
-            let aux = product.nombre
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .trim();
+          if (!found){
+            let aux = product.nombre.toLowerCase().normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "").trim();
             //console.log(aux, transcriptNormalized);
             //console.log(aux.includes(transcriptNormalized));
-            if (aux.includes(transcriptNormalized)) {
-              deleteProduct(product.nombre);
-              found = true;
-              return false;
+            if (aux.includes(transcriptNormalized)){
+                deleteProduct(product.nombre);
+                found = true;
+                return false;
             }
           }
         });
-        if (transcriptNormalized.includes("siguiente")) {
+        if (transcriptNormalized.includes("siguiente")){
           nextProduct();
           found = true;
-        } else if (transcriptNormalized.includes("borrar")) {
+        }
+        else if (transcriptNormalized.includes("borrar")){
           deleteProduct(fav_products[currentIndex].name);
           found = true;
         }
-      } else {
+      }
+      else{
         voiceContainer.style.display = "none";
       }
     }
 
-    if (!found) {
+    if (!found){
       showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
-    voiceContainer.style.backgroundColor = "white";
+    voiceContainer.style.backgroundColor = "#888";
+    recognition.abort(); 
+    recording = false;
   };
 
   // Configurar el evento de error del reconocimiento de voz
   recognition.onerror = (event) => {
-    console.error("Error en el reconocimiento de voz:", event.error);
-    voiceContainer.style.backgroundColor = "white";
+    if (event.error == "aborted"){
+      if (recording){
+        recording = false;
+        recognition.abort(); 
+        voiceContainer.style.backgroundColor = "#888";
+      }
+    }
+    else{
+      console.error("Error en el reconocimiento de voz:", event.error);
+      voiceContainer.style.backgroundColor = "#888";
+      recognition.abort();
+    }
   };
 
   // Configurar el evento click del botón de voz
   voiceContainer.addEventListener("click", (event) => {
     event.stopPropagation(); // Detener la propagación del clic para evitar que se cierre al hacer clic en el botón
-    // Iniciar el reconocimiento de voz cuando se hace clic en el botón
-    recognition.start();
-    voiceContainer.style.backgroundColor = "#ff6666";
-    console.log("Reconocimiento de voz iniciado");
+    if (recording){
+      recording = false;
+      recognition.abort(); // Detener el reconocimiento de voz
+      voiceContainer.style.backgroundColor = "#888";
+    }
+    else{
+      // Iniciar el reconocimiento de voz cuando se hace clic en el botón
+      recognition.start();
+      voiceContainer.style.backgroundColor = "#ff6666";
+      recording = true;
+      console.log("Reconocimiento de voz iniciado");
+    }
+  
   });
 
   // Event listener para cerrar la opción de reconocimiento por voz al hacer clic fuera del círculo o en el botón de voz
   document.addEventListener("click", (event) => {
     if (event.target !== voiceActivator) {
-      voiceContainer.style.display = "none"; // Ocultar el contenedor del reconocimiento por voz
-      recognition.abort(); // Detener el reconocimiento de voz
-      voiceContainer.style.backgroundColor = "white";
+      voiceContainer.style.display = "none"; 
+      recognition.abort(); 
+      voiceContainer.style.backgroundColor = "#888";
+      recording = false;
       //console.log("Reconocimiento de voz detenido");
     }
   });
@@ -541,13 +532,14 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   voiceButton.disabled = true;
 }
 
+
 /////////////////// GIROSCOPIO ////////////////////////
 
 let actionExecuted = false;
 
-window.addEventListener("deviceorientation", (event) => {
-  const beta = event.beta;
-  const gamma = event.gamma;
+window.addEventListener('deviceorientation', (event) => {
+  const beta = event.beta; 
+  const gamma = event.gamma; 
   if (cart_page.style.display == "block" && !actionExecuted) {
     // Cambiar de producto si se inclina
     if (beta < 5) {
@@ -558,13 +550,11 @@ window.addEventListener("deviceorientation", (event) => {
         actionExecuted = false;
       }, 1000);
     }
-
+    
     // Borrar si se gira a la derecha
     if (gamma > 35) {
       console.log("Giro");
-      const confirmation = window.confirm(
-        "¿Estás seguro de que quieres borrar este producto?"
-      );
+      const confirmation = window.confirm("¿Estás seguro de que quieres borrar este producto?");
       console.log(fav_products[currentIndex]);
       if (confirmation) {
         deleteProduct(fav_products[currentIndex].name);
@@ -579,74 +569,15 @@ window.addEventListener("deviceorientation", (event) => {
 
 ///////////////// DICTAR LA LISTA DE PRODUCTOS ///////////////
 function speakProductList() {
-  const synthesis = window.speechSynthesis;
+  const synthesis = window.speechSynthesis; 
   if (!synthesis) {
-    console.error("La síntesis de voz no está disponible en este navegador.");
+    console.error('La síntesis de voz no está disponible en este navegador.');
     return;
   }
-  const utterance = new SpeechSynthesisUtterance();
-  const productList = all_products.map((product) => product.nombre).join(", ");
+  const utterance = new SpeechSynthesisUtterance(); 
+  const productList = all_products.map(product => product.nombre).join(', '); 
   console.log(productList);
-  utterance.text = productList;
+  utterance.text = productList; 
 
   synthesis.speak(utterance);
 }
-
-//// Hacer la compra ////
-
-function realizaCompra() {
-  if (cart_page.style.display == "block") {
-    const confirmation = window.confirm(
-      "¿Estás seguro de que quieres realizar la compra?"
-    );
-    if (confirmation) {
-      alert("Compra realizada con éxito");
-      //fav_products = [];
-      //load_carrito(fav_products);
-    }
-  }
-}
-
-if (window.DeviceMotionEvent) {
-  let shakingTimer; // Variable to hold the timer reference
-
-  window.addEventListener("devicemotion", function (event) {
-    // Check if there's acceleration data
-    if (event.acceleration && event.accelerationIncludingGravity) {
-      // Calculate total acceleration by summing the absolute values of the acceleration in x, y, and z axes
-      let totalAcceleration =
-        Math.abs(event.acceleration.x) +
-        Math.abs(event.acceleration.y) +
-        Math.abs(event.acceleration.z);
-
-      // Check if total acceleration exceeds a threshold (adjust as needed)
-      if (totalAcceleration > 10) {
-        // If shaking, start the timer if it's not already running
-        if (!shakingTimer) {
-          shakingTimer = setTimeout(function () {
-            // If shaking for 3 seconds, execute the realizarCompra function
-            realizarCompra();
-            // Reset the shaking timer
-            shakingTimer = null;
-          }, 2000); // 3000 milliseconds = 3 seconds
-        }
-      } else {
-        // If not shaking, clear the timer
-        clearTimeout(shakingTimer);
-        shakingTimer = null;
-      }
-    }
-  });
-}
-
-///////////////// FUNCIÓN PAGO ////////////////////////
-
-function realizarPago() {
-  socket.emit("realizarPago");
-}
-
-socket.on("redirectPago", (data) => {
-  console.log("Redirigiendo a la página de pago");
-  console.log("/pago?user=" + data);
-  window.location.href = "/pago?user=" + data;
-});

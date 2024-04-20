@@ -9,10 +9,8 @@
   </head>
   <body>
   
-    <div style="display: flex; justify-content: flex-start;">
-      <a onclick="showMic()"  class="box"></a>
-        <img id="voice_activator", src="./images/microfono.png" alt="Microfono"/>
-      </a>
+    <div class="box" style="display: flex; justify-content: flex-start;" onclick="showMic()">
+      <img id="voice_activator" src="./images/microfono.png" alt="Microfono"/>
     </div>
     
     <header>
@@ -24,9 +22,9 @@
         />
       </a>
       <h1 id = "title" onclick="displayMain()" class="box">Tienda Online</h1>
-      <a id="cartLink"  class="box" onclick="displayCart()">
+      <a id="cartLink"  class="box">
         <div style="display: flex; justify-content: flex-end;">
-          <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+          <img src="./images/carrito.png" onclick="displayCart()" alt="Carrito de Compra" id="cartIcon" />
         </div>
       </a>
     </header>

@@ -298,13 +298,17 @@ main {
   bottom: 20px;
   top: 0;
   border-radius: 50%;
-  background-color: #fefefe;
+  background-color: #888;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
   height: 25%;
   transition: background-color 0.3s ease;
+}
+#voice:hover {
+  background-color: #ffcc00; /* Color al que cambia */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra para el efecto */
 }
 
 #voiceButton {
@@ -325,12 +329,12 @@ main {
 }
 label {
   display: inline-block;
-  padding: 5px 10px; /* Agregar espacio alrededor del texto */
-  background-color: #f0f0f0; /* Color de fondo */
-  border: 1px solid #ccc; /* Borde delgado */
-  border-radius: 5px; /* Esquinas redondeadas */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  font-weight: bold; /* Texto en negrita */
+  padding: 5px 10px; 
+  background-color: #f0f0f0; 
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+  font-weight: bold;
 }
 
 .selected {
