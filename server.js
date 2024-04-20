@@ -76,16 +76,16 @@ function save_favourite() {
         JSON.stringify(favourite_products, null, 2),
         (err) => {
           if (err) {
-            console.error("Error al guardar la lista de productos:", err);
+            //console.error("Error al guardar la lista de productos:", err);
             reject(err); // Rechazar la promesa si hay un error
           } else {
-            console.log(`Lista de productos guardada correctamente.`);
+            //console.log(`Lista de productos guardada correctamente.`);
             resolve(0); // Resolver la promesa si la operación es exitosa
           }
         }
       );
     } catch (err) {
-      console.error("Error al guardar la lista de productos:", err);
+      //console.error("Error al guardar la lista de productos:", err);
       reject(err); // Rechazar la promesa en caso de error
     }
   });
@@ -106,7 +106,7 @@ function authenticateUser(username, password) {
 }
 
 io.on("connection", (socket) => {
-  console.log("Nuevo cliente conectado, con id:", socket.id);
+  //console.log("Nuevo cliente conectado, con id:", socket.id);
   active_users.push({ id: socket.id, username: null });
   load_all_products();
 
@@ -115,9 +115,7 @@ io.on("connection", (socket) => {
 
   // Agregar un nuevo producto
   socket.on("addProduct", async (newProduct) => {
-
     if (active_users.find((user) => user.id === socket.id).username == null) {
-
       socket.emit("addProductResult", {
         success: false,
         message: "El usuario no iniciado sesión",
@@ -132,7 +130,7 @@ io.on("connection", (socket) => {
         });
         return;
       }
-      
+
       // Agregar artículos al usuario
       current_user = active_users.find(
         (user) => user.id === socket.id
@@ -162,7 +160,7 @@ io.on("connection", (socket) => {
         });
       }
 
-      console.log("Producto añadido con éxito");
+      //("Producto añadido con éxito");
       socket.emit("addProductResult", {
         success: true,
         message: "Producto guardado correctamente",
@@ -177,7 +175,7 @@ io.on("connection", (socket) => {
   });
   // Eliminar un producto
   socket.on("deleteProduct", async (productId) => {
-    console.log("Vamos a borrar: ", productId);
+    //console.log("Vamos a borrar: ", productId);
     if ((await load_favourites(socket)) != 0) {
       socket.emit("productDeleted", {
         success: false,
@@ -300,9 +298,28 @@ io.on("connection", (socket) => {
       });
     }
   });
+
+  socket.on("loadFavouritesFromUser", async function (user_temp) {
+    console.log(user_temp);
+    if ((await load_favourites(socket)) != 0) {
+      socket.emit("loadFavouritesResult", {
+        success: false,
+        message: "Error al cargar la lista",
+      });
+      return;
+    }
+    if (favourite_products[user_temp] == null) {
+      favourite_products[user_temp] = [];
+    }
+
+    socket.emit("loadFavouritesResult", {
+      success: true,
+      message: favourite_products[user_temp],
+    });
+  });
+
   /////// ADMIN ///////
   socket.on("newProduct", (jsonData) => {
-
     const newProduct = JSON.parse(jsonData);
     products.push(newProduct);
     fs.writeFile(productsFilePath, JSON.stringify(products, null, 2), (err) => {
@@ -310,7 +327,6 @@ io.on("connection", (socket) => {
         console.error("Error al guardar el producto:", err);
         socket.emit("productAdded", { success: false });
       } else {
-
         socket.emit("productAdded", { success: true });
       }
     });
@@ -333,7 +349,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("Cliente desconectado con id:", socket.id);
+    //console.log("Cliente desconectado con id:", socket.id);
     active_users = active_users.filter((user) => user.id !== socket.id);
   });
 

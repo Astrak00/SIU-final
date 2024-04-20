@@ -8,6 +8,11 @@
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   </head>
   <body>
+  
+    <div class="box" style="display: flex; justify-content: flex-start;" onclick="showMic()">
+      <img id="voice_activator" src="./images/microfono.png" alt="Microfono"/>
+    </div>
+    
     <header>
       <a id="loginIcon" class="box" onclick="displayForm()">
         <img
@@ -17,78 +22,88 @@
         />
       </a>
       <h1 id = "title" onclick="displayMain()" class="box">Tienda Online</h1>
-      <a onclick="showMic()"  class="box">
-        <img id="voice_activator", src="./images/microfono.png" alt="Microfono"/>
-      </a>
-      <a id="cartLink"  class="box" onclick="displayCart()">
-        <img src="./images/carrito.png" alt="Carrito de Compra" id="cartIcon" />
+      <a id="cartLink"  class="box">
+        <div style="display: flex; justify-content: flex-end;">
+          <img src="./images/carrito.png" onclick="displayCart()" alt="Carrito de Compra" id="cartIcon" />
+        </div>
       </a>
     </header>
-    <section id="main_page">
-      <div class="container-filtro">
-        <div class="filtro">
-          <div id="titulo-filtro">
-            <h2>Filtros</h2>
-          </div>
-          <div id="div-filtro-precio">
-            <label for="filtro-precio">Precio:</label>
-            <select name="filtro" id="filtro-precio">
-              <option value="0">Todos</option>
-              <option value="10">Menor a $10</option>
-              <option value="30">Entre $15 y 30$</option>
-              <option value="100">Entre $30 y 100$</option>
-              <option value="200">Entre $100 y 200$</option>
-              <option value="-1">Más de 200$</option>
-            </select>
-          </div>
-          <div id="div-filtro-categoria">
-            <label for="filtro-categoria">Categoría:</label>
-            <select name="filtro" id="filtro-categoria">
-              <option value="0">Todos</option>
-              <option value="1">kk</option>
-              <option value="2">pp</option>
-            </select>
+      <main>
+      <section id="main_page">
+        <div class="container-filtro">
+          <div class="filtro">
+            <div id="titulo-filtro">
+              <h2>Filtros</h2>
+            </div>
+            <div id="div-filtro-precio">
+              <label for="filtro-precio">Precio:</label>
+              <select name="filtro" id="filtro-precio">
+                <option value="0">Todos</option>
+                <option value="10">Menor a $10</option>
+                <option value="30">Entre $15 y 30$</option>
+                <option value="100">Entre $30 y 100$</option>
+                <option value="200">Entre $100 y 200$</option>
+                <option value="-1">Más de 200$</option>
+              </select>
+            </div>
+            <div id="div-filtro-categoria">
+              <label for="filtro-categoria">Categoría:</label>
+              <select name="filtro" id="filtro-categoria">
+                <option value="0">Todos</option>
+                <option value="1">kk</option>
+                <option value="2">pp</option>
+              </select>
+            </div>
           </div>
         </div>
+        <div id="products">
+          <!-- Productos -->
+        </div>
+      </section>
+      
+      <div id="inst_main">
+        <p>Para guardar un producto diga su nombre</p>
+        <p>Para redactar la lista diga: dictar, leer, redactar...</p>
+        <p>Para ir al carro diga: carro, carrito, favoritos, guardados, cesta....</p>
       </div>
-      <div id="products">
-        <!-- Productos -->
-      </div>
-    </section>
-    <a id = "voice">
-      <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
-    </a>
-    <section id="carro">
-      <h1>Carrito de Compra</h1>
-      <!-- Carrito de Compra -->
-      <div id="cart">
-        <ul id="cart-items"></ul>
-        <p id="cart-total">Total: $<span id="totalAmount">0.00</span></p>
-        <button id="checkout" onclick=realizarPago() >Checkout</button>
-      </div>
-    </section>
+      <div id="inst_carro">
+        <p>Para borrar un producto diga su nombre</p>
+        <p>Para ir a la página principal diga: pagina princiapl, volver</p>
+      </div>  
+      <a id = "voice">
+        <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
+      </a>
+      <section id="carro">
+        <h1>Carrito de Compra</h1>
+        <!-- Carrito de Compra -->
+        <div id="cart">
+          <ul id="cart-items"></ul>
+          <p id="cart-total">Total: $<span id="totalAmount">0.00</span></p>
+          <button id="checkout" onclick=realizarPago() >Checkout</button>
+        </div>
+      </section>
 
-    <section id="formularios">
-      <div id="contenedor-formularios">
-        <div id="loginFormContainer">
-          <h1>Inicio de Sesión</h1>
-          <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
-            <button type="submit" onclick="Submitform()">Login</button>
-          </form>
+      <section id="formularios">
+        <div id="contenedor-formularios">
+          <div id="loginFormContainer">
+            <h1>Inicio de Sesión</h1>
+            <form id="loginForm">
+              <input type="text" id="username" placeholder="Username" />
+              <input type="password" id="password" placeholder="Password" />
+              <button type="submit" onclick="Submitform()">Login</button>
+            </form>
+          </div>
+          <div id="signUpFormContainer">
+            <h1>Registro</h1>
+            <form id="signUpForm">
+              <input type="text" id="username_signup" placeholder="Username" />
+              <input type="password" id="password_signup" placeholder="Password" />
+              <input type="password" id="password2" placeholder="Confirm Password" />
+              <button type="submit" onclick="Submitformsignup()">Register</button>
+            </form>
         </div>
-        <div id="signUpFormContainer">
-          <h1>Registro</h1>
-          <form id="signUpForm">
-            <input type="text" id="username_signup" placeholder="Username" />
-            <input type="password" id="password_signup" placeholder="Password" />
-            <input type="password" id="password2" placeholder="Confirm Password" />
-            <button type="submit" onclick="Submitformsignup()">Register</button>
-          </form>
-      </div>
-    </section>
-    
+      </section>
+    </main>
     <div id="error-modal" class="modal">
       <div id="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
