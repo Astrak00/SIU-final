@@ -508,7 +508,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (!found) {
       showModal(`No reconocido producto ${transcriptNormalized}`, 1);
     }
-    voiceContainer.style.backgroundColor = "#888";
+    voiceContainer.style.backgroundColor = "#4d64ca";
     recognition.abort();
     recording = false;
   };
@@ -519,11 +519,11 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
       if (recording) {
         recording = false;
         recognition.abort();
-        voiceContainer.style.backgroundColor = "#888";
+        voiceContainer.style.backgroundColor = "#4d64ca";
       }
     } else {
       console.error("Error en el reconocimiento de voz:", event.error);
-      voiceContainer.style.backgroundColor = "#888";
+      voiceContainer.style.backgroundColor = "#4d64ca";
       recognition.abort();
     }
   };
@@ -534,7 +534,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (recording) {
       recording = false;
       recognition.abort(); // Detener el reconocimiento de voz
-      voiceContainer.style.backgroundColor = "#888";
+      voiceContainer.style.backgroundColor = "#4d64ca";
     } else {
       // Iniciar el reconocimiento de voz cuando se hace clic en el botón
       recognition.start();
@@ -549,7 +549,7 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     if (event.target !== voiceActivator) {
       voiceContainer.style.display = "none";
       recognition.abort();
-      voiceContainer.style.backgroundColor = "#888";
+      voiceContainer.style.backgroundColor = "#4d64ca";
       recording = false;
       //console.log("Reconocimiento de voz detenido");
     }

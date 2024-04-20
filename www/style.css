@@ -23,7 +23,7 @@ main {
 }
 
 .box {
-  flex:1;
+  flex: 1;
 }
 
 #Login_Icon {
@@ -53,7 +53,6 @@ main {
   height: 30px;
   cursor: pointer;
 }
-
 
 .container-filtro {
   text-align: center;
@@ -211,9 +210,9 @@ main {
 }
 
 #Login_Icon {
-  width: 50px; 
+  width: 50px;
   height: auto;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 #contenedor-formularios {
@@ -301,7 +300,7 @@ main {
   background-color: #4d64ca;
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid #4d64ca;
   width: 25%;
   height: 25%;
   transition: background-color 0.3s ease;
@@ -329,11 +328,11 @@ main {
 }
 label {
   display: inline-block;
-  padding: 5px 10px; 
-  background-color: #f0f0f0; 
+  padding: 5px 10px;
+  background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 5px; 
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   font-weight: bold;
 }
 
