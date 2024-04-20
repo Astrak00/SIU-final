@@ -100,15 +100,15 @@ io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado, con id:", socket.id);
   active_users.push({ id: socket.id, username: null });
   load_all_products();
-  console.log("Productos cargados", "productos");
+
   // Enviar la lista de productos al cliente cuando se conecta
   socket.emit("products", products);
 
   // Agregar un nuevo producto
   socket.on("addProduct", async (newProduct) => {
-    console.log("Recibido añadir nuevo producto", newProduct);
+
     if (active_users.find((user) => user.id === socket.id).username == null) {
-      console.log("El usuario no iniciado sesión", favourite_products);
+
       socket.emit("addProductResult", {
         success: false,
         message: "El usuario no iniciado sesión",
@@ -123,10 +123,7 @@ io.on("connection", (socket) => {
         });
         return;
       }
-      console.log(
-        "El usuario está registrado, y este es su carrito:",
-        favourite_products
-      );
+      
       // Agregar artículos al usuario
       current_user = active_users.find(
         (user) => user.id === socket.id
@@ -190,7 +187,7 @@ io.on("connection", (socket) => {
     const index = favourite_products[current_user].findIndex(
       (product) => product.name === productId
     ); // Usar findIndex() en lugar de find()
-    console.log(index);
+
     if (index !== -1) {
       favourite_products[current_user].splice(index, 1);
       if ((await save_favourite()) != 0) {
@@ -240,7 +237,7 @@ io.on("connection", (socket) => {
     console.log({ username, password });
     // Check if the user already exists in the database
     const user = users.find((user) => user.username === username);
-    console.log(user);
+
     if (user) {
       // Si el usuario ya existe, mandar error
       socket.emit("signupResult", {
@@ -259,9 +256,9 @@ io.on("connection", (socket) => {
     };
 
     users.push(newUser);
-    console.log(users);
+
     active_users.find((user) => user.id === socket.id).username = username;
-    console.log(active_users);
+
     socket.emit("signupResult", {
       success: true,
       message: "Cuenta creada con exito",
@@ -296,7 +293,7 @@ io.on("connection", (socket) => {
   });
   /////// ADMIN ///////
   socket.on("newProduct", (jsonData) => {
-    console.log("Nuevo producto recibido:", jsonData);
+
     const newProduct = JSON.parse(jsonData);
     products.push(newProduct);
     fs.writeFile(productsFilePath, JSON.stringify(products, null, 2), (err) => {
@@ -304,10 +301,31 @@ io.on("connection", (socket) => {
         console.error("Error al guardar el producto:", err);
         socket.emit("productAdded", { success: false });
       } else {
-        console.log("Producto guardado correctamente.");
+
         socket.emit("productAdded", { success: true });
       }
     });
+  });
+
+  socket.on("realizarPago", () => {
+    console.log("Se va a cambiar al usuario a la pagina de pago");
+    socket.emit(
+      "redirectPago",
+      active_users.find((user) => user.id === socket.id).username
+    );
+  });
+
+  socket.on("paymentMade", (data) => {
+    let user = data.user;
+    let payment = data.payment;
+    console.log("Pago realizado por", user, "con", payment);
+    // Eliminar los productos del carrito
+    favourite_products[user] = [];
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Cliente desconectado con id:", socket.id);
+    active_users = active_users.filter((user) => user.id !== socket.id);
   });
 });
 

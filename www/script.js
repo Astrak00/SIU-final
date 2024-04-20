@@ -638,3 +638,15 @@ if (window.DeviceMotionEvent) {
     }
   });
 }
+
+///////////////// FUNCIÓN PAGO ////////////////////////
+
+function realizarPago() {
+  socket.emit("realizarPago");
+}
+
+socket.on("redirectPago", (data) => {
+  console.log("Redirigiendo a la página de pago");
+  console.log("/pago?user=" + data);
+  window.location.href = "/pago?user=" + data;
+});

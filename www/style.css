@@ -17,7 +17,7 @@ header {
   left: 0;
   top: 0;
 }
-.box{
+.box {
   width: 20%;
 }
 
@@ -30,7 +30,7 @@ header {
   width: 50px;
   height: auto;
   cursor: pointer;
-  margin-left: auto; 
+  margin-left: auto;
 }
 
 #voice_activator {
@@ -38,7 +38,7 @@ header {
   height: 30px;
   cursor: pointer;
 }
-#main_page{
+#main_page {
   display: block;
   height: 85%;
   margin-top: 15%;
@@ -48,19 +48,18 @@ header {
   margin-bottom: 40px;
 }
 
-
-.filtro{
+.filtro {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.filtro #titulo-filtro{
+.filtro #titulo-filtro {
   width: 100%;
   margin-bottom: 10px;
 }
 
-.filtro div{
+.filtro div {
   width: 40%;
 }
 
@@ -103,9 +102,6 @@ header {
   background-color: #af2121;
 }
 
-
-
-
 .modal {
   display: none;
   position: fixed;
@@ -114,7 +110,7 @@ header {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 #modal-content {
@@ -139,8 +135,7 @@ header {
   cursor: pointer;
 }
 
-
-.but{
+.but {
   margin-top: 10px;
   display: inline-block;
   padding: 10px 20px;
@@ -164,8 +159,7 @@ header {
   color: #999999;
 }
 
-
-#carro{
+#carro {
   margin-top: 15%;
   display: none;
 }
@@ -194,14 +188,14 @@ header {
 }
 
 #cartItems li {
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 #totalPrice {
   font-weight: bold;
 }
 
-#formularios{
+#formularios {
   margin-top: 15%;
   display: none;
 }
@@ -216,14 +210,14 @@ header {
   cursor: pointer; /* Cambiar el cursor a una mano al pasar por encima */
 }
 
-#contenedor-formularios{
+#contenedor-formularios {
   display: grid;
   grid-template: 1fr 9fr / 4fr 2fr 4fr;
   justify-items: center;
   height: 100vh;
 }
 
-#loginFormContainer{
+#loginFormContainer {
   grid-column: 1 / 1;
   grid-row: 2 / 2;
   width: auto;
@@ -231,33 +225,32 @@ header {
   text-align: center;
 }
 
-#loginFormContainer h1{
- margin-top: 10%;
- font-size: 4vh;
+#loginFormContainer h1 {
+  margin-top: 10%;
+  font-size: 4vh;
 }
 
-#loginForm{
+#loginForm {
   display: inline-block;
   vertical-align: middle;
   margin: 10%;
   width: 70%;
 }
 
-#loginForm input{
+#loginForm input {
   height: 3vh;
   margin-bottom: 15%;
   width: 95%;
 }
 
-#loginForm button{
+#loginForm button {
   margin-top: 10%;
   height: 5vh;
   font-size: 3vh;
   width: 70%;
 }
 
-
-#signUpFormContainer{
+#signUpFormContainer {
   grid-column: 3 / 3;
   grid-row: 2 / 2;
   width: auto;
@@ -265,25 +258,25 @@ header {
   text-align: center;
 }
 
-#signUpFormContainer h1{
+#signUpFormContainer h1 {
   margin-top: 10%;
   font-size: 4vh;
- }
+}
 
-#signUpForm{
+#signUpForm {
   display: inline-block;
   vertical-align: middle;
   margin: 10%;
   width: 70%;
 }
 
-#signUpForm input{
+#signUpForm input {
   height: 3vh;
   margin-bottom: 15%;
   width: 95%;
 }
 
-#signUpForm button{
+#signUpForm button {
   margin-top: 10%;
   height: 5vh;
   font-size: 3vh;
@@ -292,15 +285,15 @@ header {
 
 #voice {
   display: none;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 5;
   left: 0;
   right: 0;
-  bottom: 20px; 
+  bottom: 20px;
   top: 0;
-  border-radius: 50%; 
+  border-radius: 50%;
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -312,16 +305,16 @@ header {
 
 #voiceButton {
   cursor: pointer;
-  width: 70%; 
+  width: 70%;
   height: 90%;
 }
 
-#añadir_producto{
+#añadir_producto {
   display: none;
   justify-content: center;
   text-align: center;
 }
-#añadir{
+#añadir {
   margin-top: 5%;
   margin-bottom: 5%;
   text-align: center;
