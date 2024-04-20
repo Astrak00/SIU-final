@@ -2,7 +2,7 @@ const socket = io("http://localhost:3000");
 
 const URL = "./ppl/";
 
-let model, webcam, labelContainer, maxPredictions;
+let model, webcam, labelContainer;
 
 // Load the image model and setup the webcam
 async function init() {
@@ -14,14 +14,13 @@ async function init() {
   // or files from your local hard drive
   // Note: the pose library adds "tmImage" object to your window (window.tmImage)
   model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
 
   // Convenience function to setup a webcam
   const flip = true; // whether to flip the webcam
   // Get the current screen width and height
   const width_scr = window.innerWidth;
   const height_scr = window.innerHeight;
-  const_square = Math.min(width_scr, height_scr) * 0.9;
+  const_square = Math.min(width_scr, height_scr) * 0.75;
 
   const devices = await navigator.mediaDevices.enumerateDevices();
 
@@ -39,17 +38,25 @@ async function init() {
   await webcam.play();
   window.requestAnimationFrame(loop);
   document.getElementById("webcam-container").appendChild(webcam.canvas);
-  labelContainer = document.getElementById("label-container");
-  for (let i = 0; i < maxPredictions; i++) {
-    // and class labels
-    labelContainer.appendChild(document.createElement("div"));
-  }
 
   async function loop() {
     webcam.update(); // update the webcam frame
     //await predict();
     window.requestAnimationFrame(loop);
   }
+
+  socket.emit("loadFavouritesFromUser", user);
+  socket.on("loadFavouritesResult", (data) => {
+    // Calculate the total amount to pay
+    let total = 0;
+    data = data.message;
+    console.log(data);
+    data.forEach((element) => {
+      total += element.price;
+    });
+    total = total.toFixed(2);
+    document.getElementById("capture-btn").innerHTML += ": " + total + "€";
+  });
 }
 
 function showModal(message, err) {

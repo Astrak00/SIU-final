@@ -4,18 +4,15 @@
     <title>Image Capture</title>
   </head>
   <body>
+    <link rel="stylesheet" href="styles.css" />
     <div>
       <h2>Con que método quieres pagar? Hazle una foto al método</h2>
     </div>
-    <div id="webcam-container"></div>
-    <div id="label-container"></div>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
-    <script src="script.js"></script>
-
-    <button id="capture-btn" onclick="predict()">Pagar con esto</button>
+    <!-- Webcam video feed as a column, so the button is to the right -->
+    <section class="video-section"> 
+      <div id="webcam-container"></div>
+      <button id="capture-btn" onclick="predict()">Pagar</button>
+    </section>
 
     <div id="error-modal" class="modal">
       <div id="modal-content">
@@ -23,5 +20,9 @@
         <p id="error-message"></p>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
