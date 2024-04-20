@@ -2,16 +2,18 @@
 <html>
   <head>
     <title>Image Capture</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <link rel="stylesheet" href="styles.css" />
-    <div>
-      <h2>Con que método quieres pagar? Hazle una foto al método</h2>
-    </div>
-    <!-- Webcam video feed as a column, so the button is to the right -->
-    <section class="video-section"> 
-      <div id="webcam-container"></div>
-      <button id="capture-btn" onclick="predict()">Pagar</button>
+    <section>
+      <div>
+        <h2>Con que método quieres pagar? Hazle una foto al método</h2>
+      </div>
+      <!-- Webcam video feed as a column, so the button is to the right -->
+      <article class="video-section"> 
+        <div id="webcam-container"></div>
+        <button id="capture-btn" onclick="predict()">Pagar</button>
+      </article>
     </section>
 
     <div id="error-modal" class="modal">

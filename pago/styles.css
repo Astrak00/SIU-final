@@ -9,6 +9,12 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+section{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 #modal-content {
   background-color: #fefefe;
   margin: 15% auto;
@@ -47,12 +53,6 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 7px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  float: right;
-  position: absolute;
-  top: 10rem;
-  right: 10%;
 }
 
 .webcam-container {

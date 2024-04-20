@@ -25,16 +25,10 @@ const comandos_sesion = [
   "crear cuenta",
   "acceso",
   "inicio de sesion",
+  "inicio sesion",
+  "inicia sesion",
 ];
-const comandos_lectura = [
-  "dictar",
-  "leer",
-  "enumerar",
-  "lista",
-  "productos",
-  "enumerar lista",
-  "enumerar lista de productos",
-];
+const comandos_lectura = ["dictar", "redactar", "leer", "enumerar", "lista", "productos", "redactar lista", "redactar productos", "enumerar lista", "enumerar lista de productos"]
 socket.on("products", (data) => {
   all_products = data;
   console.log("Productos recibidos");
@@ -124,7 +118,6 @@ socket.on("productDeleted", (data) => {
 
 // Función para agregar un producto
 function addProduct(newProduct) {
-  event.preventDefault();
   socket.emit("addProduct", newProduct);
 }
 
@@ -193,7 +186,7 @@ function renderlist(data) {
     productElement.setAttribute("data-precio", product.precio);
 
     const button_product = document.createElement("button");
-    button_product.onclick = (event) => {
+    button_product.onclick = () => {
       addProduct({ name: product.nombre, price: product.precio });
     };
 
@@ -414,10 +407,21 @@ function Submitformsignup() {
 const voiceActivator = document.getElementById("voice_activator");
 const voiceButton = document.getElementById("voiceButton");
 const voiceContainer = document.getElementById("voice"); // Contenedor del reconocimiento por voz
+const inst_carro =  document.getElementById("inst_carro");
+const inst_main =  document.getElementById("inst_main");
+
 let recording = false;
 // Función para mostrar el contenedor del reconocimiento por voz
 function showMic() {
   voiceContainer.style.display = "flex";
+  if (main_page.style.display == "block" || main_page.style.display == ""){
+    inst_carro.style.display = "none";
+    inst_main.style.display = "block";
+  }
+  else if (cart_page.style.display == "block") {
+    inst_carro.style.display = "block";
+    inst_main.style.display = "none";
+  }
 }
 
 // Verificar si el navegador admite la Web Speech API
@@ -502,6 +506,8 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
         }
       } else {
         voiceContainer.style.display = "none";
+        inst_carro.style.display = "none";
+        inst_main.style.display = "none";
       }
     }
 
@@ -515,16 +521,14 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
 
   // Configurar el evento de error del reconocimiento de voz
   recognition.onerror = (event) => {
+    voiceContainer.style.backgroundColor = "#4d64ca";
+    recognition.abort();
     if (event.error == "aborted") {
       if (recording) {
         recording = false;
-        recognition.abort();
-        voiceContainer.style.backgroundColor = "#4d64ca";
       }
     } else {
       console.error("Error en el reconocimiento de voz:", event.error);
-      voiceContainer.style.backgroundColor = "#4d64ca";
-      recognition.abort();
     }
   };
 
@@ -547,6 +551,8 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   // Event listener para cerrar la opción de reconocimiento por voz al hacer clic fuera del círculo o en el botón de voz
   document.addEventListener("click", (event) => {
     if (event.target !== voiceActivator) {
+      inst_carro.style.display = "none";
+      inst_main.style.display = "none";
       voiceContainer.style.display = "none";
       recognition.abort();
       voiceContainer.style.backgroundColor = "#4d64ca";
@@ -570,7 +576,7 @@ window.addEventListener("deviceorientation", (event) => {
   if (cart_page.style.display == "block" && !actionExecuted) {
     // Cambiar de producto si se inclina
     if (beta < 5) {
-      console.log("Next");
+      //console.log("Next");
       nextProduct();
       actionExecuted = true;
       setTimeout(() => {
@@ -580,7 +586,7 @@ window.addEventListener("deviceorientation", (event) => {
 
     // Borrar si se gira a la derecha
     if (gamma > 35) {
-      console.log("Giro");
+      //console.log("Giro");
       const confirmation = window.confirm(
         "¿Estás seguro de que quieres borrar este producto?"
       );
@@ -664,8 +670,12 @@ function realizarPago() {
   socket.emit("realizarPago");
 }
 
-socket.on("redirectPago", (data) => {
+function cambiarPago(data) {
   console.log("Redirigiendo a la página de pago");
   console.log("/pago?user=" + data);
   window.location.href = "/pago?user=" + data;
+}
+
+socket.on("redirectPago", (data) => {
+  cambiarPago(data);
 });

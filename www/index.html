@@ -60,6 +60,16 @@
           <!-- Productos -->
         </div>
       </section>
+      
+      <div id="inst_main">
+        <p>Para guardar un producto diga su nombre</p>
+        <p>Para redactar la lista diga: dictar, leer, redactar...</p>
+        <p>Para ir al carro diga: carro, carrito, favoritos, guardados, cesta....</p>
+      </div>
+      <div id="inst_carro">
+        <p>Para borrar un producto diga su nombre</p>
+        <p>Para ir a la página principal diga: pagina princiapl, volver</p>
+      </div>  
       <a id = "voice">
         <img id="voiceButton", src="./images/microfono.png" alt="Microfono"/>
       </a>
@@ -93,14 +103,13 @@
             </form>
         </div>
       </section>
-      
-      <div id="error-modal" class="modal">
-        <div id="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-          <p id="error-message"></p>
-        </div>
-      </div>
     </main>
+    <div id="error-modal" class="modal">
+      <div id="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="error-message"></p>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
