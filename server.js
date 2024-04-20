@@ -28,6 +28,7 @@ let products = [];
 //let current_user = null;
 let active_users = [];
 let favourite_products = {};
+let tiendas = [];
 
 // Cargar todos los productos disponibles
 function load_all_products() {
@@ -36,6 +37,14 @@ function load_all_products() {
     products = JSON.parse(data);
   } catch (err) {
     console.error("Error al cargar la lista de contactos:", err);
+  }
+}
+function load_all_stores() {
+  try {
+    const data = fs.readFileSync("./shops.json", "utf8");
+    tiendas = JSON.parse(data);
+  } catch (err) {
+    console.error("Error al cargar la lista de tiendas:", err);
   }
 }
 
@@ -326,6 +335,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Cliente desconectado con id:", socket.id);
     active_users = active_users.filter((user) => user.id !== socket.id);
+  });
+
+  socket.on("request_stores", async function () {
+    load_all_stores();
+    socket.emit("request_stores_result", tiendas);
+    console.log(tiendas);
+
   });
 });
 

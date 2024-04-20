@@ -17,7 +17,7 @@
           Añadir producto
         </button>
       </div>
-      <form id="añadir_producto" onsubmit="enviarRespuestas(event)">
+      <form id="añadir_producto" onsubmit="enviarRespuestasProducto(event)">
         <div>
           <label for="nombre">Nombre:</label>
           <input type="text" id="nombre" name="nombre" required />
@@ -47,12 +47,37 @@
           <label for="descripcion">Descripción:</label>
           <textarea id="descripcion" name="descripcion" required></textarea>
         </div>
-        <button onclick="enviarRespuestas(event)">Enviar</button>
+        <button onclick="enviarRespuestasProducto(event)">Enviar</button>
         <button class="boton" onclick="ocultarCuestionario()">Cerrar</button>
+      </form>
+      <div id="añadir">
+      <button id="anadir-btn" onclick="mostrarTiendas()">
+        Añadir tienda
+      </button>
+    </div>
+      <form id="añadir_tienda" onsubmit="enviarRespuestasTienda(event)">
+        <div>
+          <label for="lugar">Lugar:</label>
+          <input type="text" id="lugar" name="lugar" required />
+        </div>
+        <div>
+          <label for="coordenada x">Coordenada X:</label>
+          <input type="number" id="precio" name="coordenada x" required />
+        </div>
+        <div>
+          <label for="coordenada y">Coordenada Y:</label>
+          <input type="number" id="cantidad" name="coordenada y" required />
+        </div>
+        <div>
+          <label for="src">Enlace:</label>
+          <input type="url" id="enlace_tienda" name="enlace" required />
+        </div>
+
+        <button onclick="enviarRespuestasTienda(event)">Enviar</button>
+        <button class="boton" onclick="ocultarTiendas()">Cerrar</button>
       </form>
 
       <div id="products">
-        <!-- Productos -->
       </div>
     </section>
     <a id="cartLink" onclick="showCart()">

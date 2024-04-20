@@ -313,6 +313,11 @@ header {
   justify-content: center;
   text-align: center;
 }
+#añadir_tienda{
+  display: none;
+  justify-content: center;
+  text-align: center;
+}
 #añadir {
   margin-top: 5%;
   margin-bottom: 5%;

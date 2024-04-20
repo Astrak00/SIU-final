@@ -1,0 +1,17 @@
+[
+    {
+        "lugar": "Paseo de la castellana",
+        "src": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.elmundo.es%2Feconomia%2Fahorro-y-consumo%2F2020%2F06%2F07%2F5edcd3eb21efa0504d8b464f.html&psig=AOvVaw0k09BWRCo96tzKwAqvRvUs&ust=1713692798342000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIC87afB0IUDFQAAAAAdAAAAABAY",
+        "coordenadas": [40,-3]
+    },
+    {
+        "lugar": "El Bercial",
+        "src": "https://lh3.googleusercontent.com/p/AF1QipMZWExJlsPBDEZZxGrJDATMog8grAWg6rNL4c-e=s1360-w1360-h1020-rw",
+        "coordenadas": [15,20]
+    },
+    {
+        "lugar": "Campo de las naciones",
+        "src": "https://lh3.googleusercontent.com/p/AF1QipM1H3mChPAAg2RaRTz1HvqngoSxc-uTWuPU_pOF=s1360-w1360-h1020-rw",
+        "coordenadas": [10,0]
+    }
+]
