@@ -1,6 +1,7 @@
-produts.json
-favourite_products.json
-.idea
-node_modules
-package-lock.json
-.DS_Store
+/produts.json
+/favourite_products.json
+.idea/
+node_modules/
+/package-lock.json
+/.DS_Store
+images_ml/

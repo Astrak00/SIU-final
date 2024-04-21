@@ -7,14 +7,13 @@ body {
 header {
   height: 15%;
   display: flex;
-  background-color: #333;
-  color: #fff;
+  background-color: #4d64ca;
+  color: #eb5959;
   width: 100%;
   left: 0;
   top: 0;
   justify-content: center;
 }
-
 
 #main_page {
   display: flex;
@@ -40,7 +39,6 @@ label {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
   font-weight: bold; /* Texto en negrita */
 }
-
 
 .modal {
   display: none;

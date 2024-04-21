@@ -28,7 +28,18 @@ const comandos_sesion = [
   "inicio sesion",
   "inicia sesion",
 ];
-const comandos_lectura = ["dictar", "redactar", "leer", "enumerar", "lista", "productos", "redactar lista", "redactar productos", "enumerar lista", "enumerar lista de productos"]
+const comandos_lectura = [
+  "dictar",
+  "redactar",
+  "leer",
+  "enumerar",
+  "lista",
+  "productos",
+  "redactar lista",
+  "redactar productos",
+  "enumerar lista",
+  "enumerar lista de productos",
+];
 socket.on("products", (data) => {
   all_products = data;
   console.log("Productos recibidos");
@@ -74,7 +85,6 @@ function displayForm() {
 function displayMap(page) {
   window.location.href = page;
 }
-
 
 function displayMain() {
   cart_page.style.display = "none";
@@ -412,18 +422,17 @@ function Submitformsignup() {
 const voiceActivator = document.getElementById("voice_activator");
 const voiceButton = document.getElementById("voiceButton");
 const voiceContainer = document.getElementById("voice"); // Contenedor del reconocimiento por voz
-const inst_carro =  document.getElementById("inst_carro");
-const inst_main =  document.getElementById("inst_main");
+const inst_carro = document.getElementById("inst_carro");
+const inst_main = document.getElementById("inst_main");
 
 let recording = false;
 // Función para mostrar el contenedor del reconocimiento por voz
 function showMic() {
   voiceContainer.style.display = "flex";
-  if (main_page.style.display == "block" || main_page.style.display == ""){
+  if (main_page.style.display == "block" || main_page.style.display == "") {
     inst_carro.style.display = "none";
     inst_main.style.display = "block";
-  }
-  else if (cart_page.style.display == "block") {
+  } else if (cart_page.style.display == "block") {
     inst_carro.style.display = "block";
     inst_main.style.display = "none";
   }

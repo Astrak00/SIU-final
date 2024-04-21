@@ -1,5 +1,3 @@
-//import { showModal } from "../www/script.js";
-
 const socket = io("http://localhost:3000");
 
 function mostrarCuestionario() {
@@ -14,12 +12,12 @@ function ocultarCuestionario() {
 
 function mostrarTiendas() {
   var formulario = document.getElementById("añadir_tienda");
-  formulario.style.display = "block"; 
+  formulario.style.display = "block";
 }
 
 function ocultarTiendas() {
   var formulario = document.getElementById("añadir_tienda");
-  formulario.style.display = "none"; 
+  formulario.style.display = "none";
 }
 
 function sendResponse(jsonData) {
@@ -51,9 +49,11 @@ function enviarRespuestasTienda(event) {
   // Recuperar los valores del formulario
   const producto = {
     lugar: document.getElementById("lugar").value,
-    coordenadas: [document.getElementById("coordenada x").value,document.getElementById("coordenada y").value],
-    src: document.getElementById("enlace_tienda").value
-
+    coordenadas: [
+      document.getElementById("coordenada x").value,
+      document.getElementById("coordenada y").value,
+    ],
+    src: document.getElementById("enlace_tienda").value,
   };
   console.log("Producto añadido", producto);
   const jsonData = JSON.stringify(producto);
