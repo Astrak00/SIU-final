@@ -49,8 +49,18 @@ main {
   top: 40px;
   right: 20%;
   z-index: 1001;
-  width: 30px;
-  height: 30px;
+  width: auto;
+  height: 5%;
+  cursor: pointer;
+}
+
+#map_activator {
+  position: fixed;
+  top: 40px;
+  left: 20%;
+  z-index: 1001;
+  width: auto;
+  height: 5%;
   cursor: pointer;
 }
 

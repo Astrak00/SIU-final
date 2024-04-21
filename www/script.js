@@ -71,6 +71,11 @@ function displayForm() {
   form_page.style.display = "block";
 }
 
+function displayMap(page) {
+  window.location.href = page;
+}
+
+
 function displayMain() {
   cart_page.style.display = "none";
   main_page.style.display = "block";
