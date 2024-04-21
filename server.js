@@ -25,12 +25,11 @@ app.use(express.static(path.join(__dirname, ".")));
 const productsFilePath = "./products.json";
 let products = [];
 
-//let current_user = null;
 let active_users = [];
 let favourite_products = {};
 let tiendas = [];
 
-// Cargar todos los productos disponibles
+// Cargar todos los productos disponibles en el archivo products.json
 function load_all_products() {
   try {
     const data = fs.readFileSync(productsFilePath, "utf8");
@@ -66,7 +65,7 @@ function load_favourites(socket) {
   });
 }
 
-// Guardar la lista de contactos en agenda.json
+// Guardar la lista del carrito en el archivo JSON
 function save_favourite() {
   return new Promise((resolve, reject) => {
     try {
@@ -91,29 +90,26 @@ function save_favourite() {
   });
 }
 
-// Registros de usuarios
-const users = [
-  { username: "1", password: "1", id: 1 },
-  { username: "user2", password: "password2", id: 2 },
-  { username: "3", password: "3", id: 3 },
-];
+// Usuarios registrados por defecto
+const users = [{ username: "1", password: "1", id: 1 }];
 
-// Función para autenticar usuarios
+// Función para autenticar usuarios, devuelve el usuario si las credenciales son válidas
 function authenticateUser(username, password) {
   return users.find(
     (user) => user.username === username && user.password === password
   );
 }
 
+// Uso de las conexiones de Socket.IO
 io.on("connection", (socket) => {
-  //console.log("Nuevo cliente conectado, con id:", socket.id);
+  // Cuando un usuario se conecta, añadirlo a la lista de usuarios activos y cargar los productos
   active_users.push({ id: socket.id, username: null });
   load_all_products();
 
-  // Enviar la lista de productos al cliente cuando se conecta
+  // Enviar la lista de productos
   socket.emit("products", products);
 
-  // Agregar un nuevo producto
+  // Agregar un nuevo producto al carrito del usuario
   socket.on("addProduct", async (newProduct) => {
     if (active_users.find((user) => user.id === socket.id).username == null) {
       socket.emit("addProductResult", {
@@ -131,7 +127,7 @@ io.on("connection", (socket) => {
         return;
       }
 
-      // Agregar artículos al usuario
+      // Comprobar que el usuario es el actual.
       current_user = active_users.find(
         (user) => user.id === socket.id
       ).username;
@@ -160,12 +156,13 @@ io.on("connection", (socket) => {
         });
       }
 
-      //("Producto añadido con éxito");
+      // Emitir un mensaje de éxito
       socket.emit("addProductResult", {
         success: true,
         message: "Producto guardado correctamente",
       });
     } catch (error) {
+      // Si existe un error, envia un mensaje de error por el socket
       console.error("Error en la operación de agregar producto:", error);
       socket.emit("addProductResult", {
         success: false,
@@ -173,9 +170,9 @@ io.on("connection", (socket) => {
       });
     }
   });
-  // Eliminar un producto
+
+  // Eliminar un producto por su nombre
   socket.on("deleteProduct", async (productId) => {
-    //console.log("Vamos a borrar: ", productId);
     if ((await load_favourites(socket)) != 0) {
       socket.emit("productDeleted", {
         success: false,
@@ -183,6 +180,7 @@ io.on("connection", (socket) => {
       });
       return;
     }
+    // Comprobar que el usuario esté iniciado sesión.
     current_user = active_users.find((user) => user.id === socket.id).username;
     if (current_user == null) {
       socket.emit("productDeleted", {
@@ -193,8 +191,8 @@ io.on("connection", (socket) => {
     }
     const index = favourite_products[current_user].findIndex(
       (product) => product.name === productId
-    ); // Usar findIndex() en lugar de find()
-
+    );
+    // Si el producto no existe, devolvemos una excepción.
     if (index !== -1) {
       favourite_products[current_user].splice(index, 1);
       if ((await save_favourite()) != 0) {
@@ -239,10 +237,11 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Manejar el evento de registro
   socket.on("signup", async function (credentials) {
     const { username, password } = credentials;
     console.log({ username, password });
-    // Check if the user already exists in the database
+    // Comprueba si el usuario ya existe en la base de datos.
     const user = users.find((user) => user.username === username);
 
     if (user) {
@@ -262,8 +261,8 @@ io.on("connection", (socket) => {
       id,
     };
 
+    // Añadimos el nuevo usuario y le asignamos el id del socket
     users.push(newUser);
-
     active_users.find((user) => user.id === socket.id).username = username;
 
     socket.emit("signupResult", {
@@ -272,7 +271,7 @@ io.on("connection", (socket) => {
     });
   });
 
-  // Manejar el evento de carga de favoritos
+  // Manejar el evento de carga de favoritos a la lista de ese usuario
   socket.on("loadFavourites", async function () {
     current_user = active_users.find((user) => user.id === socket.id).username;
     if (current_user == null) {
@@ -299,6 +298,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Envia al usuario su lista de favoritos
   socket.on("loadFavouritesFromUser", async function (user_temp) {
     console.log(user_temp);
     if ((await load_favourites(socket)) != 0) {
@@ -319,6 +319,7 @@ io.on("connection", (socket) => {
   });
 
   /////// ADMIN ///////
+  // Manejar el evento de añadir un nuevo producto
   socket.on("newProduct", (jsonData) => {
     const newProduct = JSON.parse(jsonData);
     products.push(newProduct);
@@ -332,6 +333,7 @@ io.on("connection", (socket) => {
     });
   });
 
+  // Manejar el evento de mover al usuario a la página de pago
   socket.on("realizarPago", () => {
     console.log("Se va a cambiar al usuario a la pagina de pago");
     socket.emit(
@@ -340,6 +342,7 @@ io.on("connection", (socket) => {
     );
   });
 
+  // Manejar el evento de pago realizado
   socket.on("paymentMade", (data) => {
     let user = data.user;
     let payment = data.payment;
@@ -348,11 +351,12 @@ io.on("connection", (socket) => {
     favourite_products[user] = [];
   });
 
+  // Manejar el evento de desconexión del usuario, borra al usuario de la lista de activos
   socket.on("disconnect", () => {
-    //console.log("Cliente desconectado con id:", socket.id);
     active_users = active_users.filter((user) => user.id !== socket.id);
   });
 
+  // Manejar el evento de petición de tiendas
   socket.on("request_stores", async function () {
     load_all_stores();
     socket.emit("request_stores_result", tiendas);

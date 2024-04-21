@@ -1,22 +1,3 @@
 {
-  "1": [
-    {
-      "name": "Tableta",
-      "price": 299.99
-    },
-    {
-      "name": "Camiseta de algodón",
-      "price": 15.99
-    }
-  ],
-  "5": [
-    {
-      "name": "Anillo de plata",
-      "price": 29.99
-    },
-    {
-      "name": "Smartwatch",
-      "price": 129.99
-    }
-  ]
+   
 }
