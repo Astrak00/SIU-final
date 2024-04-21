@@ -350,6 +350,7 @@ io.on("connection", (socket) => {
     console.log("Pago realizado por", user, "con", payment);
     // Eliminar los productos del carrito
     favourite_products[user] = [];
+    save_favourite();
   });
 
   // Manejar el evento de desconexión del usuario, borra al usuario de la lista de activos
