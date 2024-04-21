@@ -8,7 +8,6 @@ const express = require("express");
 const http = require("http");
 const fs = require("fs");
 const path = require("path"); // Import the path module
-
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
@@ -17,10 +16,12 @@ const io = require("socket.io")(server, {
     methods: ["GET", "POST"],
   },
 });
+const favicon = require("serve-favicon");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, ".")));
+app.use(favicon(__dirname + "/favicon.ico"));
 
 const productsFilePath = "./products.json";
 let products = [];
