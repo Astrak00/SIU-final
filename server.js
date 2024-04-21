@@ -197,7 +197,7 @@ io.on("connection", (socket) => {
     if (index !== -1) {
       favourite_products[current_user].splice(index, 1);
       if ((await save_favourite()) != 0) {
-        console.log("Error al guardar la lista tras borrar el producto");
+        console.error("Error al guardar la lista tras borrar el producto");
         socket.emit("productDeleted", {
           success: false,
           message: "Error al borrar el producto",
@@ -220,7 +220,7 @@ io.on("connection", (socket) => {
   socket.on("login", async function (credentials) {
     const { username, password } = credentials;
     // Aquí verificarías las credenciales de inicio de sesión
-    console.log("Buscamos el usuario");
+    //console.log("Buscamos el usuario");
     const user = users.find(
       (user) => user.username === username && user.password === password
     );
@@ -229,7 +229,7 @@ io.on("connection", (socket) => {
       active_users.find((user) => user.id === socket.id).username = username;
       socket.emit("loginResult", { success: true });
     } else {
-      console.log("Credenciales inválidas");
+      //console.error("Credenciales inválidas");
       // Inicio de sesión fallido
       socket.emit("loginResult", {
         success: false,
@@ -241,7 +241,7 @@ io.on("connection", (socket) => {
   // Manejar el evento de registro
   socket.on("signup", async function (credentials) {
     const { username, password } = credentials;
-    console.log({ username, password });
+    //console.log({ username, password });
     // Comprueba si el usuario ya existe en la base de datos.
     const user = users.find((user) => user.username === username);
 
@@ -301,7 +301,7 @@ io.on("connection", (socket) => {
 
   // Envia al usuario su lista de favoritos
   socket.on("loadFavouritesFromUser", async function (user_temp) {
-    console.log(user_temp);
+    //console.log(user_temp);
     if ((await load_favourites(socket)) != 0) {
       socket.emit("loadFavouritesResult", {
         success: false,
@@ -336,7 +336,7 @@ io.on("connection", (socket) => {
 
   // Manejar el evento de mover al usuario a la página de pago
   socket.on("realizarPago", () => {
-    console.log("Se va a cambiar al usuario a la pagina de pago");
+    //console.log("Se va a cambiar al usuario a la pagina de pago");
     socket.emit(
       "redirectPago",
       active_users.find((user) => user.id === socket.id).username
@@ -347,7 +347,7 @@ io.on("connection", (socket) => {
   socket.on("paymentMade", (data) => {
     let user = data.user;
     let payment = data.payment;
-    console.log("Pago realizado por", user, "con", payment);
+    //console.log("Pago realizado por", user, "con", payment);
     // Eliminar los productos del carrito
     favourite_products[user] = [];
     save_favourite();
@@ -362,7 +362,7 @@ io.on("connection", (socket) => {
   socket.on("request_stores", async function () {
     load_all_stores();
     socket.emit("request_stores_result", tiendas);
-    console.log(tiendas);
+    //console.log(tiendas);
   });
 });
 

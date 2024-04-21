@@ -107,6 +107,10 @@ async function predict() {
   } else {
     showModal("Pago cancelado", 1);
   }
+  // Wait 2 seconds to redirect to the main page
+  setTimeout(() => {
+    window.location.href = `/www`;
+  }, 1400);
 }
 
 init();
