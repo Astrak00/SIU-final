@@ -6,7 +6,7 @@ Este es la última práctica de la asignatura de Sistemas Interactivos y Ubicuos
 
 - Sergio Barragán Blanco
 - Javier Campos
-- Enrique
+- Enrique Córdoba
 - Eduardo Alarcón
 
 ## 2. Descripción de la aplicación
